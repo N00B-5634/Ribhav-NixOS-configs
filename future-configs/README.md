@@ -4,7 +4,7 @@ Welcome to the **Future Configs** section of [Ribhav-NixOS-configs](https://gith
 
 ---
 
-## ⚠️ Why Is This Directory Empty?
+## ⚠️ Why Is This Directory Empty? ##
 
 This folder is **intentionally left empty** — for now.  
 It’s a placeholder for **upcoming configurations, beta projects, and experimental setups** that will be added as I learn more about software development and system design.
