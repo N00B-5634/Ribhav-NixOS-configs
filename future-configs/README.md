@@ -9,7 +9,7 @@ Welcome to the **Future Configs** section of [Ribhav-NixOS-configs](https://gith
 This folder is **intentionally left empty** — for now.  
 It’s a placeholder for **upcoming configurations, beta projects, and experimental setups** that will be added as I learn more about software development and system design.
 
-Think of this as a **"construction zone"** for future ideas that will later become part of my NixOS and app configuration ecosystem.
+Think of this as a **"unstable branch"** for future ideas that will later become part of my master branch.
 
 ---
 
