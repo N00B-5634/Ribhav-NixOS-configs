@@ -2,7 +2,7 @@
 
 > “Who said pain wasn't real"  
 
-Welcome to **Ribhav’s NixOS Config — powered by **Nix**, **Plasma 6**, and **Zsh**.
+Welcome to **Ribhav’s NixOS Config** — powered by **Nix**, **Plasma 6**, and **Zsh**.
 
 ---
 
