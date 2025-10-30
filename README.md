@@ -1,8 +1,8 @@
 # ❄️ Ribhav’s NixOS Configs
 
-> “Who said pain wasn't real" -- Me, 2025  
+> “Who said pain wasn't real"  
 
-Welcome to **Ribhav’s NixOS Configs**, a personal, minimal yet functional configuration for a modern Linux experience — powered by **Nix**, **Plasma 6**, and **Zsh**.
+Welcome to **Ribhav’s NixOS Config — powered by **Nix**, **Plasma 6**, and **Zsh**.
 
 ---
 
