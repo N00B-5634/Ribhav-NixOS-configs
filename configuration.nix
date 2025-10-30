@@ -34,7 +34,6 @@ programs.zsh.enable = true;
        tree
        bat
        firefox
-       bat
        alacritty
        fastfetch
        zulu8
