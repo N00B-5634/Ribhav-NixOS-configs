@@ -19,4 +19,5 @@ This setup focuses on:
 Ribhav-NixOS-configs/
 ├── config/                # My configs(e.g Alacritty, Starship)
 ├── configuration.nix      # Main system configuration
-└── README.md              # You’re here
+└──future-configs/         # In Progress don't open.
+└── README.md# You’re here
