@@ -1,6 +1,7 @@
 # ❄️ Ribhav’s NixOS Configs
 
-> “Who said pain wasn't real"  
+> “Who said pain wasn't real"
+> - Ribhav (N00B-5634), Oct 28 2025 
 
 Welcome to **Ribhav’s NixOS Config** — powered by **Nix**, **Plasma 6**, and **Zsh**.
 
