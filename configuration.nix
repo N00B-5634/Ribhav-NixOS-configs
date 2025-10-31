@@ -49,32 +49,67 @@
      shell = pkgs.zsh;
      # Enable ‘sudo’ for the user.
      packages = with pkgs; [
-       eza
-       tree
-       bat
-       firefox
-       bat
-       alacritty
-       fastfetch
-       zulu8
-       zulu24
-       python314
-       guacamole-server
-       git
-       htop
-       nmap
-       rsync
-       zip
-       unzip
-       zsh
-       starship
-       gitAndTools.gh
-       fd
-       zsh-syntax-highlighting
-       zsh-autosuggestions
-       discord
-       music-assistant
-       gnome-network-displays
+   eza
+tree
+bat
+firefox
+alacritty
+fastfetch
+zulu8
+zulu24
+python314
+guacamole-server
+git
+htop
+nmap
+rsync
+zip
+unzip
+zsh
+starship
+gitAndTools.gh
+fd
+zsh-syntax-highlighting
+zsh-autosuggestions
+discord
+music-assistant
+gnome-network-displays
+ripgrep
+fzf
+btop
+duf
+tldr
+neofetch
+gcc
+gnumake
+cmake
+pkg-config
+nodejs_22
+pnpm
+rustup
+go
+docker
+curl
+wget
+jq
+yq
+lf
+zoxide
+nerdfonts
+papirus-icon-theme
+rsnapshot
+restic
+openssh
+wireguard-tools
+curlie
+iperf3
+vlc
+mpv
+flameshot
+gnome-tweaks
+gnome-shell-extensions
+
+
      ];
    };
 
