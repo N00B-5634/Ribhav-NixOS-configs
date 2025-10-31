@@ -56,11 +56,11 @@ programs.zsh.enable = true;
    nerd-fonts.jetbrains-mono
    flatpak
    ];
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
+   programs.mtr.enable = true;
+   programs.gnupg.agent = {
+     enable = true;
+     enableSSHSupport = true;
+   };
    services.openssh.enable = true;
   # system.copySystemConfiguration = true;
   system.stateVersion = "25.05"; # Did you read the comment?
