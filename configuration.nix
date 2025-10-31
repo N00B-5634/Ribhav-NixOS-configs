@@ -99,7 +99,9 @@
   # Enable the OpenSSH daemon.
    services.openssh.enable = true;
 
-   
+   networking.firewall.allowedTCPPorts = [52 443 80 1980];
+  networking.firewall.allowedUDPPorts = [1144];
+
    networking.firewall.enable = false;
 
    system.copySystemConfiguration = true;
