@@ -1,6 +1,6 @@
 # 🚧 Future Configs — Coming Soon 🚧 
 
-Welcome to the **Future Configs** section of [Ribhav-NixOS-configs](https://github.com/N00B-5634/Ribhav-NixOS-configs)!
+Welcome to the **Future Configs** section of [My NixOS Repo](https://github.com/N00B-5634/Ribhav-NixOS-configs)!
 
 ---
 
