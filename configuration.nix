@@ -74,6 +74,7 @@
        zsh-autosuggestions
        discord
        music-assistant
+       gnome-network-displays
      ];
    };
 
