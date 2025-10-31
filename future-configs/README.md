@@ -1,4 +1,4 @@
-# 🚧 Future Configs — Coming Soon 🚧
+# 🚧 Future Configs — Coming Soon 🚧 
 
 Welcome to the **Future Configs** section of [Ribhav-NixOS-configs](https://github.com/N00B-5634/Ribhav-NixOS-configs)!
 
@@ -17,7 +17,7 @@ Think of this as a **"unstable branch"** for future ideas that will later become
 
 Once development starts, you can expect to find:
 - 🔧 Early prototypes and **beta configs** for apps I’m creating  
-- 🧠 Experimental **NixOS modules and scripts**  
+- 🧠 Experimental ***NixOS modules and scripts*** 
 - 🧰 Personal projects related to automation, dev environments, and testing  
 
 These files might be unstable or incomplete — they’ll serve as **learning experiments** and **early previews**.
