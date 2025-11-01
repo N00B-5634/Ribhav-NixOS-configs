@@ -1,0 +1,3 @@
+# Ignore laptop config directory on desktop
+/laptop-config/
+
