@@ -14,7 +14,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-   networking.hostName = "nixos";
+   networking.hostName = "nixos-btw-secured";
 
    networking.networkmanager.enable = true;
 
@@ -58,7 +58,12 @@
   git
   htop
   nmap
-  rsync
+  rsync eza
+  tree
+  bat
+  firefox
+  alacritty
+
   zip
   unzip
   zsh
@@ -103,9 +108,7 @@
   gnome-tweaks
   gnome-shell-extensions
   neovim
-
-
-
+  prismlauncher   
      ];
    };
 
