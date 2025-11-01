@@ -20,9 +20,6 @@
 
 
    time.timeZone = "America/New_York";
-
-
-
   # Enable the X11 windowing system.
    services.xserver.enable = true;
    services.displayManager.sddm.enable = true;
@@ -47,8 +44,7 @@
      isNormalUser = true;
      extraGroups = [ "wheel" ];
      shell = pkgs.zsh;
-     # Enable ‘sudo’ for the user.
-     packages = with pkgs; [
+ packages = with pkgs; [
     eza
   tree
   bat
@@ -106,31 +102,27 @@
   flameshot
   gnome-tweaks
   gnome-shell-extensions
+  neovim
+
 
 
      ];
    };
 
    nixpkgs.config.allowUnfree = true;
-  # List packages installed in system profile.
-  # You can use https://search.nixos.org/ to find more packages (and options).
    environment.systemPackages = with pkgs; [
    nerd-fonts.jetbrains-mono
    flatpak
    ];
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
+   programs.nano.enable = false;
+   programs.neovim.enable = true;
    services.openssh.enable = true;
+        programs.zsh = {
+  enableCompletion = true;
+  autosuggestions.enable = true;
+  syntaxHighlighting.enable = true;
+};
+
 
    networking.firewall.allowedTCPPorts = [52 443 80 1980];
   networking.firewall.allowedUDPPorts = [1144];
