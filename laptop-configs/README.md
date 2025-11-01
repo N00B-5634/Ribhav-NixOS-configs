@@ -1,46 +1,39 @@
-# 🚧 Future Configs — Coming Soon 🚧 
+# ⚠️ Warning — Laptop Configuration ⚠️
 
-Welcome to the **Future Configs** section of [My NixOS Repo](https://github.com/N00B-5634/Ribhav-NixOS-configs)!
-
----
-
-## ⚠️ Why Is This Directory Empty? ##
-
-This folder is **intentionally left empty** — for now.  
-It’s a placeholder for **upcoming configurations, beta projects, and experimental setups** that will be added as I learn more about software development and system design.
-
-Think of this as a **"unstable branch"** for future ideas that will later become part of my master branch.
+Welcome to the **Laptop Configuration** section of [My NixOS Repo](https://github.com/N00B-5634/Ribhav-NixOS-configs)!
 
 ---
 
-## 🧩 What to Expect Here
+## ⚠️ Important Notice
 
-Once development starts, you can expect to find:
-- 🔧 Early prototypes and **beta configs** for apps I’m creating  
-- 🧠 Experimental ***NixOS modules and scripts*** 
-- 🧰 Personal projects related to automation, dev environments, and testing  
+This directory contains **my personal laptop setup** — it is **not identical** to the configuration used on my desktop system.
 
-These files might be unstable or incomplete — they’ll serve as **learning experiments** and **early previews**.
+Each device has its own environment, hardware, and workflow preferences, so expect differences in:
+- 🧩 Installed packages and services  
+- ⚙️ System options and hardware drivers  
+- 🖥️ UI tweaks and performance optimizations  
 
----
-
-## 🕓 When Will Updates Arrive?
-
-Updates will appear here **as I learn and build more**.  
-If you’d like to stay notified, consider:
-- ⭐ **Starring** the repo  
-- 🕵️ **Watching** for changes  
-- 💬 **Opening an issue** if you’d like to suggest ideas or contribute  
+If you’re comparing configs or trying to replicate my setup, please double-check which device you’re looking at.
 
 ---
 
-## 💡 About This Repo
+## 💻 About This Config
 
-This is part of my ongoing journey exploring **NixOS developement** and **software development**.  
-The main repository lives here:  
+This configuration is:
+- Tailored for **laptop performance and mobility**  
+- Optimized for **battery life, power management, and portability**  
+- Slightly different from the **desktop setup**, which focuses more on raw power and workstation efficiency  
+
+---
+
+## 💡 About the Repo
+
+This is part of my ongoing NixOS journey and experimentation with system design and customization.
+
+You can find the main repository here:  
 👉 [https://github.com/N00B-5634/Ribhav-NixOS-configs](https://github.com/N00B-5634/Ribhav-NixOS-configs)
 
 ---
 
-> _“Hey, at least it's not Arch.”_  
-> — Ribhav (N00B-5634), Oct 30 2025
+> _“Oi, I'm using libsssl here!”_  
+> — Ribhav (N00B-5634), Nov 1 2025
