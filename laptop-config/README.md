@@ -35,5 +35,6 @@ You can find the main repository here:
 
 ---
 
-> _“Oi, I'm using libsssl here!”_  
+> _“Oi, I'm using libssl here!”_  
 > — Ribhav (N00B-5634), Nov 1 2025
+_Auto-updated on Sat Nov  1 01:49:44 PM EDT 2025_.
