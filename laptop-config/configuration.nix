@@ -13,7 +13,7 @@
     # Include the results of the hardware scan.
 
     ./hardware-configuration.nix
-
+	 
   ];
 
 
@@ -23,12 +23,11 @@
 
   boot.loader.efi.canTouchEfiVariables = true;
 
-
   networking.hostName = "nixos-btw-secured";
 
   networking.networkmanager.enable = true;
 
-
+nix.settings.experimental-features = ["nix-command" "flakes" ];
   time.timeZone = "America/New_York";
 
 
