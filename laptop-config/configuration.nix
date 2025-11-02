@@ -45,10 +45,10 @@
   services.xserver.displayManager.gdm.enable = true;
 
   services.xserver.desktopManager.gnome.enable = true;
-
   services.xserver.displayManager.gdm.wayland = true;
   services.printing.enable = true;
-
+  services.flatpak.enable = true;
+  
   # Audio setup
 
   services.pulseaudio.enable = false;
@@ -110,7 +110,7 @@ i18n.extraLocales = ["en_US.UTF-8/UTF-8"];  # Support additional locales if need
 
       restic openssh wireguard-tools curlie iperf3 vlc
 
-      mpv flameshot gnome-tweaks gnome-shell-extensions neovim prismlauncher zoom-us
+      mpv flameshot gnome-tweaks gnome-shell-extensions neovim prismlauncher zoom-us nss
 
     ];
 
