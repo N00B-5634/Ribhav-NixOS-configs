@@ -54,7 +54,7 @@
   zulu8
   zulu24
   python314
-  guacamole-client
+  guacamole-server
   git
   htop
   nmap
