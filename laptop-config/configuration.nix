@@ -27,7 +27,7 @@
 
   networking.networkmanager.enable = true;
 
-nix.settings.experimental-features = ["nix-command" "flakes" ];
+#nix.settings.experimental-features = ["nix-command" "flakes" ];
   time.timeZone = "America/New_York";
 
 
@@ -42,7 +42,7 @@ nix.settings.experimental-features = ["nix-command" "flakes" ];
   services.desktopManager.plasma6.enable = false;
 
   services.xserver.displayManager.gdm.enable = true;
-
+   security.pam.services.login.googleAuthenticator.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
   services.xserver.displayManager.gdm.wayland = true;
   services.printing.enable = true;
@@ -74,7 +74,7 @@ i18n.extraLocales = ["en_US.UTF-8/UTF-8"];  # Support additional locales if need
 
     enableCompletion = true;
 
-    autosuggestions.enable = true;
+autosuggestions.enable = true;
 
     syntaxHighlighting.enable = true;
 
@@ -122,13 +122,14 @@ i18n.extraLocales = ["en_US.UTF-8/UTF-8"];  # Support additional locales if need
   environment.systemPackages = with pkgs; [
 
     nerd-fonts.jetbrains-mono
-
     flatpak
     vanilla-dmz
   ];
 
-
-  programs.nano.enable = false;
+nix.settings = {
+    build-max-rss = 0;
+  };
+  programs.nano.enable = true;
 
   programs.neovim.enable = true;
 
@@ -144,7 +145,7 @@ i18n.extraLocales = ["en_US.UTF-8/UTF-8"];  # Support additional locales if need
   networking.firewall.enable = false;
 
 
-  system.copySystemConfiguration = true;
+  #system.copySystemConfiguration = true;
 
   system.stateVersion = "25.05";
 }

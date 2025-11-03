@@ -51,26 +51,3 @@ family = "JetBrains Mono Nerd Font"
 size = 12.0
 style = "Regular"
 
-[scrollbar]
-color = "#7AA2F7"
-track_color = "#1E1E2E"
-width = 8
-
-[selection]
-background = "#3B4261"
-foreground = "#FFFFFF"
-
-[tabs]
-active_tab_color = "#7AA2F7"
-bar_style = "classic"
-inactive_tab_color = "#414868"
-inactive_tab_foreground = "#C0CAF5"
-new_tab_button_color = "#E0AF68"
-
-[window]
-decorations = "none"
-opacity = 0.95
-
-[window.padding]
-x = 10
-y = 10
