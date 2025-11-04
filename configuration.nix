@@ -17,7 +17,7 @@
    networking.hostName = "nixos";
 
    networking.networkmanager.enable = true;
-
+# nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
    time.timeZone = "America/New_York";
   # Enable the X11 windowing system.
@@ -25,7 +25,8 @@
    services.displayManager.sddm.enable = true;
    services.displayManager.sddm.wayland.enable = true;
    services.desktopManager.plasma6.enable = true;
-
+   services.jellyfin.enable = true;
+   services.jellyfin.openFirewall = true;
   
 
 
@@ -103,9 +104,7 @@
   gnome-tweaks
   gnome-shell-extensions
   neovim
-
-
-
+  nodePackages_latest.nodejs
      ];
    };
 
@@ -113,8 +112,11 @@
    environment.systemPackages = with pkgs; [
    nerd-fonts.jetbrains-mono
    flatpak
+   jellyfin
+   jellyfin-web
+   jellyfin-ffmpeg
    ];
-   programs.nano.enable = false;
+   programs.nano.enable = true;
    programs.neovim.enable = true;
    services.openssh.enable = true;
         programs.zsh = {
@@ -129,7 +131,6 @@
 
    networking.firewall.enable = false;
 
-   system.copySystemConfiguration = true;
 
 
 
