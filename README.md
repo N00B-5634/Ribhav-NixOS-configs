@@ -1,3 +1,7 @@
+#NOTICE: REPOSITORY CLOSED
+## Why?
+I'm truly sorry, but I've since moved onto Slackware, I can't contribute here anymore.
+
 # ❄️ Ribhav’s NixOS Configs
 
 > “Who said pain wasn't real"
