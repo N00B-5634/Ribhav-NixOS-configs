@@ -1,8 +1,6 @@
-# NOTICE: REPOSITORY CLOSED
-## Why?
-I'm truly sorry, but I've since moved onto Slackware, I can't contribute here anymore.
 
-# ❄️ Ribhav’s NixOS Configs
+
+# Ribhav’s NixOS Configs
 
 > “Who said pain wasn't real"
 > - Ribhav (N00B-5634), Oct 28 2025 
@@ -11,18 +9,18 @@ Welcome to **Ribhav’s NixOS Config** — powered by **Nix**, **Plasma 6**, and
 
 ---
 
-## 🧭 Overview
+## Overview
 
 This setup focuses on:  
-- 🖥️ **Usability:** KDE Plasma 6 desktop.
+-  **Usability:** KDE Plasma 6 desktop.
 
 ---
 
-## 🗂️ Directory Structure
+## Directory Structure
 
 ```bash
 Ribhav-NixOS-configs/
 ├── config/                # My configs (e.g., Alacritty, Starship)
 ├── configuration.nix      # Main system configuration
-├── future-configs/        # In Progress — See its README!
+├── laptop-configs/        # Laptop Specific 
 └── README.md              # You’re here
