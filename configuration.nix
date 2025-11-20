@@ -14,7 +14,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-   networking.hostName = "nixos";
+   networking.hostName = "nixos-btw";
 
    networking.networkmanager.enable = true;
 # nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -25,21 +25,13 @@
    services.displayManager.sddm.enable = true;
    services.displayManager.sddm.wayland.enable = true;
    services.desktopManager.plasma6.enable = true;
-   services.jellyfin.enable = true;
-   services.jellyfin.openFirewall = true;
-  
-
-
    services.printing.enable = true;
-
-
    services.pulseaudio.enable = false;
-
     services.pipewire.enable = true;
    services.pipewire.pulse.enable = true;
-
    services.libinput.enable = true;
-     programs.zsh.enable = true;
+    
+ programs.zsh.enable = true;
 
    users.users.ribhav = {
      isNormalUser = true;
@@ -101,10 +93,9 @@
   vlc
   mpv
   flameshot
-  gnome-tweaks
-  gnome-shell-extensions
   neovim
   nodePackages_latest.nodejs
+  virtualbox
      ];
    };
 
@@ -112,12 +103,10 @@
    environment.systemPackages = with pkgs; [
    nerd-fonts.jetbrains-mono
    flatpak
-   jellyfin
-   jellyfin-web
-   jellyfin-ffmpeg
-   ];
+   handbrake
+   libdvdcss   
+];
    programs.nano.enable = true;
-   programs.neovim.enable = true;
    services.openssh.enable = true;
         programs.zsh = {
   enableCompletion = true;
@@ -130,11 +119,17 @@
   networking.firewall.allowedUDPPorts = [1144];
 
    networking.firewall.enable = false;
-
+       services.httpd.enable = true;
 
 
 
 
   system.stateVersion = "25.05";
+
+
+virtualisation.virtualbox.host.enable = true;
+users.extraGroups.vboxusers.members = [ "ribhav" ];
+virtualisation.virtualbox.guest.enable = true;
+virtualisation.virtualbox.guest.dragAndDrop = true;
 
 }
