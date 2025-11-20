@@ -13,7 +13,8 @@ Welcome to **Ribhav’s NixOS Config** — powered by **Nix**, **Plasma 6**, and
 
 This setup focuses on:  
 -  **Usability:** KDE Plasma 6 desktop.
-
+- **Power:** Has games, and other fun video tools.
+- **Productivity:** Has productivity software, as well as sane defaults.
 ---
 
 ## Directory Structure
