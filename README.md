@@ -2,7 +2,7 @@
 
 # Ribhav’s NixOS Configs
 
-> “Who said pain wasn't real."
+> “Oh no. My libc, it's broken."
 > - Ribhav (N00B-5634), Oct 28 2025 
 
 Welcome to **Ribhav’s NixOS Config** — powered by **Nix**, **Plasma 6**, and **Zsh**.
