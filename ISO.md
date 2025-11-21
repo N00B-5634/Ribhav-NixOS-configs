@@ -3,7 +3,7 @@
 - [Introduction](#introduction)
 - [Features](#features)
 - [System Requirements](#system-requirements)
-- [Final Notes](final-notes)
+- [Final Notes](#final-notes)
 ## Introduction
 
 Hello everyone, N00B-5634 here with an exciting update! I’ve finally turned my **desktop NixOS configuration** into a fully functional ISO.  
