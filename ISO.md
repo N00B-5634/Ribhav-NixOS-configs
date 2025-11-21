@@ -1,10 +1,10 @@
 # ISO Release
 
-- [Introduction](#introduction)
+- [Preamble](#preamble)
 - [Features](#features)
 - [System Requirements](#system-requirements)
 - [Final Notes](#final-notes)
-## Introduction
+## Preamble 
 
 Hello everyone, N00B-5634 here with an exciting update! I’ve finally turned my **desktop NixOS configuration** into a fully functional ISO.  
 
@@ -24,6 +24,6 @@ This release represents a significant milestone, and I’m thrilled to share it 
 - Minimum 20GB of free disk space  
 - USB drive or virtual machine for installation  
 
-## Final Notes
+### Final Notes
 Thank you for staying with this repository! Until Then...
 > -- "Hey, who said I had to limit myself?" N00B-5634 Nov 20, 2025
