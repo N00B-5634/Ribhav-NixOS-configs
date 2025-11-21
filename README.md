@@ -26,5 +26,5 @@ Ribhav-NixOS-configs/
 ├── laptop-configs/        # Laptop Specific 
 └── README.md              # You’re here
 ```
-## ISO?
+### ISO?
 Yay! I built an ISO. See more here [Click Me!](ISO.md)
