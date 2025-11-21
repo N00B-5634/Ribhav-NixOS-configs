@@ -4,26 +4,33 @@
 - [Features](#features)
 - [System Requirements](#system-requirements)
 - [Final Notes](#final-notes)
+
 ## Preamble 
 
-Hello everyone, N00B-5634 here with an exciting update! I’ve finally turned my **desktop NixOS configuration** into a fully functional ISO.  
+Greetings,
 
-This release represents a significant milestone, and I’m thrilled to share it with the community. I hope you find it useful and enjoy exploring the setup.  
+This is N00B-5634, pleased to present a major update. I have successfully transformed my **desktop NixOS configuration** into a fully functional ISO image.  
+
+This release marks an important milestone, and I am delighted to share it with the community. I trust that you will find it valuable and enjoyable to explore.
 
 ## Features
 
 - Fully configured NixOS desktop environment  
-- Pre-installed software packages for daily use  
-- Optimized performance settings  
-- Custom themes and configurations  
+- Pre-installed software packages for everyday use  
+- Performance optimizations  
+- Custom themes and personalized configurations  
 
 ## System Requirements
 
 - 64-bit processor  
-- At least 4GB of RAM  
-- Minimum 20GB of free disk space  
+- Minimum of 4GB RAM  
+- At least 20GB of available disk space  
 - USB drive or virtual machine for installation  
 
 ### Final Notes
-Thank you for staying with this repository! Until Then...
-> -- "Hi, I dispise markdown." N00B-5634 Nov 20, 2025
+
+Thank you for your continued interest in this repository. 
+
+Until next time...
+
+> -- "Hi, I despise markdown." N00B-5634, November 20, 2025
