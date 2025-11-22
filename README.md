@@ -28,6 +28,6 @@ Ribhav-NixOS-configs/
 ```
 ### ISO?
 Yay! I built an ISO. See more here [Click Me!](ISO.md)
-> [!Info]
+> [!danger]
 > I am not responsible for any malicious use of this image.
 > If any induvidual is attempting to break, or add malicious packages, it will be blocked.
