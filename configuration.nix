@@ -106,7 +106,8 @@
    nerd-fonts.jetbrains-mono
    flatpak
    handbrake
-   libdvdcss   
+   libdvdcss
+   usbutils   
 ];
    programs.nano.enable = true;
    services.openssh.enable = true;
