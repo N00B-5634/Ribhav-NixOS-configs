@@ -28,6 +28,5 @@ Ribhav-NixOS-configs/
 ```
 ### ISO?
 Yay! I built an ISO. See more here [Click Me!](ISO.md)
-<div style="border:1px solid #f00; padding:10px; border-radius:5px;">
-<strong>Warning:</strong> I am not responsible for any malicious use of this image.
-</div>
+> [!Warning]
+> I am not responsible for malicious use of this image.
