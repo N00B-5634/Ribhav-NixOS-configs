@@ -1,18 +1,25 @@
 {
-  description = "SRVBCK02617133849";
+  description = "Unified Master Multi-Machine Flake Workspace";
 
   inputs = {
-    # We lock down nixpkgs. No more surprise channel updates breaking your PHP environment.
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
   };
 
   outputs = { self, nixpkgs, ... }@inputs: {
-    nixosConfigurations.nixos-lamp = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      modules = [
-        # This pulls in your main config, which already points to your modules!
-        ./configuration.nix
-      ];
+    nixosConfigurations = {
+      
+      # 1. Your original active server profile
+      nixos-lamp = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [ ./configuration.nix ];
+      }; # <- This block ends cleanly here!
+
+      # 2. Your resurrected laptop profile (matching the attribute to your rebuild command target!)
+      nixos-laptop = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [ ./laptop-configuration.nix ];
+      };
+
     };
   };
 }
