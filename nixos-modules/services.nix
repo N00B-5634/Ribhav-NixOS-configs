@@ -448,13 +448,6 @@ in
       path = ./keycloak-theme/login;
     }
   ];
-	  services.keycloak = {
-	  enable = true;
-	  database = {
-	    type = "postgresql";
-	    passwordFile = "/var/src/secrets/keycloak-db-pass";
-	  };
-	};
 
     services.meshcentral = {
     enable = true;
