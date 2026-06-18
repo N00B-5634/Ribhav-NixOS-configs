@@ -3,7 +3,7 @@
 # your system.
 
 
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 
 {
@@ -15,7 +15,6 @@
     ./laptop-hardware.nix
 	 
   ];
-
 
   # Boot loader setup
 
@@ -32,8 +31,13 @@
   networking.networkmanager.enable = true;
 
   nix.settings.experimental-features = ["nix-command" "flakes" ];
+  nix = {
+    settings.experimental-features = [ "nix-command" "flakes" ];
+    registry.nixpkgs.flake = inputs.nixpkgs;
+    nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
+  };
   time.timeZone = "America/New_York";
-
+  
 
   # X11 and Plasma setup
 
