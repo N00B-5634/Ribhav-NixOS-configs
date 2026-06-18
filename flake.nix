@@ -3,23 +3,41 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    
+    # Introduce Home Manager tracking the unstable branch
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      # The Absolute Holy Grail: Force Home Manager to use your system's exact nixpkgs
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, ... }@inputs: {
     nixosConfigurations = {
       
-      # 1. Your original active server profile
+      # 1. Server Profile: Intentionally isolated from user-space bloat
       nixos-lamp = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-	specialArgs = { inherit inputs; };
+        specialArgs = { inherit inputs; };
         modules = [ ./configuration.nix ];
-      }; # <- This block ends cleanly here!
+      };
 
-      # 2. Your resurrected laptop profile (matching the attribute to your rebuild command target!)
+      # 2. Laptop Profile: Weaponized with Home Manager integration
       nixos-laptop = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-	specialArgs = { inherit inputs; };
-        modules = [ ./laptop-configuration.nix ];
+        specialArgs = { inherit inputs; }; 
+        modules = [ 
+          ./laptop-configuration.nix
+          
+          # Inject the Home Manager NixOS module into the system evaluation loop
+          home-manager.nixosModules.home-manager
+          {
+            # Global configuration parameters for cleanly handling configurations
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+	    home-manager.extraSpecialArgs = { inherit inputs; };
+          }
+        ];
       };
 
     };

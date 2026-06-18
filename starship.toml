@@ -1,0 +1,12 @@
+[git_branch]
+symbol = "✅"
+
+[package]
+symbol = "📦"
+
+[directory]
+style = "cyan"
+truncation_length = 3
+
+[git_status]
+style = "red"
