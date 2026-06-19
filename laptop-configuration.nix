@@ -96,12 +96,14 @@
     home.stateVersion = "25.05"; 
 
     # Link your dotfiles securely via the Nix store
-    home.file = {
-      ".config/alacritty/alacritty.yml".source = ./alacritty.yml;
-      ".config/starship.toml".source = ./starship.toml;
-      ".zshrc".source = ./.zshrc;
-    };
-
+	    home.file = {
+	  ".zshrc".source = ./.zshrc;
+	};
+		xdg.configFile = {
+	  "alacritty/alacritty.yml".source = ./alacritty.yml;
+	  "starship.toml".source = ./starship.toml;
+	  "nvim".source = ./nvim; 
+	};
     home.packages = with pkgs; [
       eza tree bat firefox alacritty fastfetch
       python314 guacamole-client git
@@ -139,6 +141,7 @@
       extraConfig = {
         init.defaultBranch = "main";
         push.autoSetupRemote = true;
+        core.editor = "nvim";
       };
     };
   };
