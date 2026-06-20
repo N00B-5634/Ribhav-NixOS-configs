@@ -80,7 +80,7 @@
     vanilla-dmz
     google-authenticator
   ];
-  environment.gnome.excludePackages = with pkgs.gnome; [
+  environment.gnome.excludePackages = with pkgs; [
   epiphany
  ];
   programs.nano.enable = true;
