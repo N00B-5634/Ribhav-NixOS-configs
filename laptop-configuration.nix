@@ -101,8 +101,14 @@
 	};
 		xdg.configFile = {
 	  "alacritty/alacritty.yml".source = ./alacritty.yml;
+          "alacritty.alacritty.yml".force = true;
+          "alacritty/alacritty.yml".recursive = true;
 	  "starship.toml".source = ./starship.toml;
-	  "nvim".source = ./nvim; 
+          "starship.toml".force = true;
+          "starship.toml".recursive = true;
+	  "nvim".source = ./nvim;
+          "nvim".force = true;
+          "nvim".recursive = true; 
 	};
     home.packages = with pkgs; [
       eza tree bat firefox alacritty fastfetch
