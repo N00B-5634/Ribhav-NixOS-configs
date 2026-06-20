@@ -42,6 +42,9 @@ in
   networking.firewall.allowedTCPPorts = [
     22
     3389
+    80
+    3001
+    4533
   ];
   networking.firewall.trustedInterfaces = ["podman0"];
   boot.kernel.sysctl = {
