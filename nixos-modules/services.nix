@@ -43,7 +43,7 @@ in
     22
     3389
     80
-    3001
+    3000
     4533
   ];
   networking.firewall.trustedInterfaces = ["podman0"];
