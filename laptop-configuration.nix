@@ -117,7 +117,7 @@
    };
  };
      home.packages = with pkgs; [
-      eza enteauth tor-browser tree bat firefox alacritty fastfetch
+      eza ente-auth tor-browser tree bat firefox alacritty fastfetch
       python314 guacamole-client git
       htop nmap rsync zip unzip zsh starship
       gh fd zsh-syntax-highlighting zsh-autosuggestions
