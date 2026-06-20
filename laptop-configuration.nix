@@ -80,7 +80,9 @@
     vanilla-dmz
     google-authenticator
   ];
-
+  environment.gnome.excludePackages = with pkgs.gnome; [
+  epiphany
+ ];
   programs.nano.enable = true;
   programs.neovim.enable = true;
   services.openssh.enable = true;
