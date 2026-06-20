@@ -99,18 +99,24 @@
 	    home.file = {
 	  ".zshrc".source = ./.zshrc;
 	};
-		xdg.configFile = {
-	  "alacritty/alacritty.yml".source = ./alacritty.yml;
-          "alacritty.alacritty.yml".force = true;
-          "alacritty/alacritty.yml".recursive = true;
-	  "starship.toml".source = ./starship.toml;
-          "starship.toml".force = true;
-          "starship.toml".recursive = true;
-	  "nvim".source = ./nvim;
-          "nvim".force = true;
-          "nvim".recursive = true; 
-	};
-    home.packages = with pkgs; [
+         xdg.configFile = {
+  "alacritty/alacritty.yml" = {
+    source = ./alacritty.yml;
+    force = true;
+  };
+
+  "starship.toml" = {
+    source = ./starship.toml;
+    force = true;
+  };
+
+  "nvim" = {
+    source = ./nvim;
+    recursive = true;
+    force = true;
+   };
+ };
+     home.packages = with pkgs; [
       eza tree bat firefox alacritty fastfetch
       python314 guacamole-client git
       htop nmap rsync zip unzip zsh starship
