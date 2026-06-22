@@ -24,33 +24,6 @@
       options = [ "fmask=0022" "dmask=0022" ];
     };
 
-  fileSystems."/var/lib/containers/storage/overlay" =
-    { device = "/var/lib/containers/storage/overlay";
-      fsType = "none";
-      options = [ "bind" ];
-    };
-
-  fileSystems."/var/lib/containers/storage/overlay-containers/b449b3b1fb20de98c9a18d302271b98083ee265b80bbb6f63e53add64ed3c80a/userdata/shm" =
-    { device = "shm";
-      fsType = "tmpfs";
-    };
-
-  fileSystems."/var/lib/containers/storage/overlay/1544fb8dc658ee28111ff2485797c24e0c13dbe781a9a854a7eade0c1311d82d/merged" =
-    { device = "overlay";
-      fsType = "overlay";
-    };
-
-  fileSystems."/mnt" =
-    { device = "/dev/sda2";
-      fsType = "ext4";
-    };
-
-  fileSystems."/mnt/boot" =
-    { device = "/dev/sda1";
-      fsType = "vfat";
-      options = [ "fmask=0022" "dmask=0022" ];
-    };
-
   swapDevices =
     [ { device = "/dev/disk/by-uuid/6c0b8767-271b-4c5f-841f-a07c2d28f910"; }
     ];
