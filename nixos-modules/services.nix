@@ -437,7 +437,7 @@ in
 	    };
 
 	    settings = {
-	      hostname = "sso.ftc25671.com";
+	      hostname-strict = false;
 	      http-enabled = true;
 	      http-port = 8089;
 	      proxy-headers = "xforwarded";  # FIXED: Added the required missing hyphen
