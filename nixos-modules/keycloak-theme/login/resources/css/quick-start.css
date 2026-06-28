@@ -1,14 +1,14 @@
 :root {
   --quickstart-primary-color-light: #613583;
-  --quickstart-primary-color-dark: #0066cc;
+  --quickstart-primary-color-dark: #613583;
   --quickstart-primary-color: var(--quickstart-primary-color-light);
 
-  --quickstart-secondary-color-light: #dc8add;
-  --quickstart-secondary-color-dark: #6a6e73;
+  --quickstart-secondary-color-light: #000000;
+  --quickstart-secondary-color-dark: #000000;
   --quickstart-secondary-color: var(--quickstart-secondary-color-light);
 
-  --quickstart-font-family: inherit;
-  --quickstart-heading-font-family: inherit;
+  --quickstart-font-family: 'Montserrat', sans-serif;
+  --quickstart-heading-font-family: 'Nunito', sans-serif;
 
   --quickstart-logo-url: var(--keycloak-logo-url);
   --quickstart-bg-logo-url: var(--keycloak-bg-logo-url);
@@ -23,15 +23,15 @@
   --quickstart-text-secondary-dark: var(--pf-v5-global--Color--light-200, #d2d2d2);
 
   --quickstart-bg-color-light: #000000;
-  --quickstart-bg-color-dark: transparent;
+  --quickstart-bg-color-dark: #000000;
   --quickstart-bg-color: var(--quickstart-bg-color-light);
 
   --quickstart-bg-image: none;
 
-  --quickstart-border-radius: 0px;
+  --quickstart-border-radius: 8px;
 
   --quickstart-card-shadow:
-    none;
+    0 2px 8px rgba(0,0,0,0.10);
 }
 
 html.pf-v5-theme-dark,

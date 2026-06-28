@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Nunito:wght@300;400;600;700&display=swap');
+
 :root {
     --keycloak-logo-url: url('../img/logos/keycloak-logo-text.svg');
     --keycloak-bg-logo-url: url("../img/backgrounds/keycloak-bg-darken.svg");
@@ -423,6 +425,7 @@ body#keycloak-bg .pf-v5-c-login {
   box-shadow: var(--quickstart-card-shadow);
 }
 
+
 /* @kte:visibility-start:hide-realm-name */
 /* Hide realm name */
 #kc-realm-name,
@@ -449,55 +452,21 @@ body#keycloak-bg .pf-v5-c-login {
 }
 /* @kte:visibility-end */
 
-/* @kte:visibility-start:hide-info-message */
-/* Hide info message */
+/* Show info message — override theme defaults that may hide it */
 #kc-info-message.kcAlertClass,
 .kc-info-message,
 [data-kc-i18n-key="infoMessage"] {
-  display: none !important;
-}
-/* @kte:visibility-end */
-
-/* @kte:visibility-start:hide-client-container */
-/* Hide client container */
-#kc-client,
-.kc-client {
-  display: none !important;
-}
-/* @kte:visibility-end */
-
-@font-face {
-  font-family: 'Open Sans V35 Latin Regular';
-  src: url('../fonts/open-sans-v35-latin-regular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
+  display: block !important;
 }
 
 :root {
-  --uploaded-bg-keycloak-bg-darken: url("../img/backgrounds/keycloak-bg-darken.svg");
   --uploaded-logo-untitled384-20251126142952: url("../img/logos/Untitled384_20251126142952.webp");
 }
 
 :root {
-  --quickstart-bg-image: url("../img/backgrounds/keycloak-bg-darken.svg");
-  --quickstart-bg-logo-url: url("../img/backgrounds/keycloak-bg-darken.svg");
-  --keycloak-bg-logo-url: url("../img/backgrounds/keycloak-bg-darken.svg");
   --quickstart-logo-url: url("../img/logos/Untitled384_20251126142952.webp");
   --keycloak-logo-url: url("../img/logos/Untitled384_20251126142952.webp");
   --kc-applied-logo-url: url("../img/logos/Untitled384_20251126142952.webp");
-  --pf-v5-global--FontFamily--text: 'Open Sans V35 Latin Regular', sans-serif;
-  --pf-v5-global--FontFamily--sans-serif: 'Open Sans V35 Latin Regular', sans-serif;
-}
-
-.kcLogin {
-  --quickstart-bg-image: url("../img/backgrounds/keycloak-bg-darken.svg");
-  --quickstart-bg-logo-url: url("../img/backgrounds/keycloak-bg-darken.svg");
-  --keycloak-bg-logo-url: url("../img/backgrounds/keycloak-bg-darken.svg");
-}
-
-body:not(#\9), html:not(#\9) {
-  background: url("../img/backgrounds/keycloak-bg-darken.svg") no-repeat center center fixed;
-  background-size: cover;
 }
 
 .kc-logo-text {
@@ -518,8 +487,4 @@ body:not(#\9), html:not(#\9) {
   width: var(--quickstart-logo-width, 300px);
   max-width: 100%;
   margin: 0 auto;
-}
-
-body {
-  font-family: 'Open Sans V35 Latin Regular', sans-serif;
 }
