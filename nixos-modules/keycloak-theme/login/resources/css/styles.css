@@ -9,11 +9,10 @@
 }
 
 .pf-v5-c-login__container {
-    grid-template-columns: 34rem;
+    grid-template-columns: minmax(auto, 34rem); /* Allows it to shrink on small screens */
     grid-template-areas: "header"
                          "main"
 }
-
 .pf-v5-c-login__main-header {
     border-top: 4px solid var(--quickstart-primary-color, var(--keycloak-card-top-color));
 }

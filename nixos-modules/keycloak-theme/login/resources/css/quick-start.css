@@ -103,7 +103,7 @@ input[type="username"],
   padding-left: 16px;
   padding-right: 16px;
 
-  border-radius: 14px;
+  border-radius: 8px;
 }
 
 /* Primary button */
@@ -113,7 +113,7 @@ button[type="submit"],
 .pf-v5-c-button.pf-m-primary {
   min-height: 48px;
 
-  border-radius: 14px;
+  border-radius: 8px;
 
   font-weight: 600;
 }
@@ -139,7 +139,7 @@ button[type="submit"],
 /* Alert styling */
 
 .pf-v5-c-alert {
-  border-radius: 14px;
+  border-radius: 8px;
   margin-bottom: 1.25rem;
 }
 
