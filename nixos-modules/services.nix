@@ -46,7 +46,6 @@ in
     3000
     4533
   ];
-  networking.firewall.trustedInterfaces = ["podman0"];
   boot.kernel.sysctl = {
     "net.core.rmem_max" = 25000000;
     "net.core.rmem_default" = 25000000;
@@ -95,7 +94,7 @@ in
     };
   };
 
-  systemd.services."cloudflared-tunnel-93928c18-effa-48a8-9453-08077f3f29a1" = {
+  systemd.services."cloudflared-tunnel-" = {
     after = [ "network-online.target" ];
     wantedBy = [ "multi-user.target" ];
 
@@ -327,7 +326,7 @@ in
 
     serviceConfig = {
       ExecStart =
-        "${pkgs.filebrowser}/bin/filebrowser -a 127.0.0.1 -p 8080 -d /var/lib/filebrowser/filebrowser.db -r /srv";
+        "${pkgs.filebrowser}/bin/filebrowser -a 127.0.0.1 -p 8080 -d /var/lib/filebrowser/filebrowser.db";
 
       Restart = "always";
 
@@ -429,7 +428,7 @@ in
   };
 
 	    services.keycloak = {
-	    enable = true;
+	    enable = false;
 
 	    database = {
 	      createLocally = false;
@@ -702,7 +701,15 @@ in
 		 };
 
 
+ systemd.services.status-page = {
+  wantedBy = [ "multi-user.target" ];
+  after = [ "network.target" ];
 
+  serviceConfig = {
+    ExecStart = "${pkgs.python3}/bin/python3 -m http.server 3001 --directory /var/www/status";
+    Restart = "always";
+   };
+ }; 
   services.mysql = {
     enable = true;
     package = pkgs.mariadb;
@@ -725,9 +732,6 @@ in
       }
     ];
   };
-  virtualisation.docker = {
-  enable = true;
-};
   services.phpfpm.pools.wordpress = {
     user = "ribhav";
     group = "wwwrun";
@@ -773,11 +777,10 @@ in
 	  ];
 
 	  virtualHosts = {
-
 	    "ftc25671.com" = {
 	      hostName = "ftc25671.com";
 	      listen = [ { port = 80; } ];
-	      serverAliases = [ "localhost" "127.0.0.1" ];
+	      serverAliases = [ "ftc25dgxyd6xxmo7mzhjjhuvpvfvrjntfxxsoczawuyrwri4evm5tgad.onion" ];
 	      documentRoot = "/srv/http/wordpress";
 
 	      extraConfig = ''
@@ -933,14 +936,27 @@ in
 		RewriteRule /(.*) ws://127.0.0.1:8082/$1 [P,L]
 
 		ProxyPreserveHost On
-		ProxyPass / http://127.0.0.1:8082/
+	ProxyPass / http://127.0.0.1:8082/
 		ProxyPassReverse / http://127.0.0.1:8082/
 		RequestHeader set X-Forwarded-Port "443"
 		RequestHeader set X-Forwarded-Proto "https"
 	      '';
 	    };
+		    # 6. Filebrowser
+		    "files.ftc25671.com" = {
+		      hostName = "files.ftc25671.com";
+                      serverAliases = [ "ftc25b7ejteyhn4pbnquterwubyixll7oih4czs6b47xhoypy23ewxid.onion"];
+		      extraConfig = ''
+			Header set Onion-Location "http://ftc25b7ejteyhn4pbnquterwubyixll7oih4czs6b47xhoypy23ewxid.onion" 
+			ProxyPreserveHost On
+                        ProxyPass / http://127.0.0.1:8080/
+			ProxyPassReverse / http://127.0.0.1:8080/
+			RequestHeader set X-Forwarded-Port "443"
+			RequestHeader set X-Forwarded-Proto "https"
+		      '';
+		    };
 
-	    # 6. NEXTCLOUD
+	    # 7. NEXTCLOUD
 	    "nextcloud.ftc25671.com" = {
 	      hostName = "nextcloud.ftc25671.com";
 	      extraConfig = ''
@@ -1059,18 +1075,7 @@ in
 	  </body>
 	  </html>
 	'';
-	  virtualisation.oci-containers.containers.uptime-kuma = {
-    image = "louislam/uptime-kuma:1";
-
-    ports = [
-      "3001:3001"
-    ];
-
-    volumes = [
-      "/var/lib/uptime-kuma:/app/data"
-    ];
-  };
-
+           
   services.samba = {
     enable = true;
     openFirewall = true;
