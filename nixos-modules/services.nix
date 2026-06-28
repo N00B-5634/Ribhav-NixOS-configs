@@ -876,8 +876,8 @@ in
                Header unset X-Frame-Options
 		Header set X-Frame-Options "ALLOW-FROM http://localhost:5174"
 		Header unset Content-Security-Policy
-		Header set Content-Security-Policy "frame-ancestors 'self' http://localhost:5174"
-		Header set Onion-Location "http://ftc254hqqsla4gxn4zhv7e6vcy2zndoeomneckpxba3dwsgly7wrxuqd.onion"
+		Header set Content-Security-Policy "frame-ancestors 'self'"
+		Header set Onion-Location "http://qq77i5bjsqsokgr7caxrgmqvdf6vnzslvrvh5cqchslg53mdzzc6v7qd.onion"
 		ProxyPreserveHost On
 		ProxyPass / http://127.0.0.1:8089/
 		ProxyPassReverse / http://127.0.0.1:8089/
