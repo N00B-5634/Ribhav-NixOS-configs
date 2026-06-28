@@ -41,7 +41,7 @@
 	    kuma-onion      = { map = [ { port = 80; target.port = 3001; } ]; version = 3; };
 	    vitepress-onion = { map = [ { port = 80; target.port = 5173; } ]; version = 3; };
 	    keycloak-onion  = { map = [ { port = 80; target.port = 8089; } ]; version = 3; };
-	    nexterm-onion   = { map = [ { port = 80; target.port = 9090; } ]; version = 3; };
+	    nexterm-onion   = { map = [ { port = 80; target.port = 8089; } ]; version = 3; };
 	    mediawiki-onion = { map = [ { port = 80; target.port = 8086; } ]; version = 3; };
 	    node1-onion     = { map = [ { port = 80; target.port = 8082; } ]; version = 3; };
 	    node2-onion     = { map = [ { port = 80; target.port = 4433; } ]; version = 3; };
