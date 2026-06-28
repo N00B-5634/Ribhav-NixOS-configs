@@ -428,7 +428,7 @@ in
   };
 
 	    services.keycloak = {
-	    enable = false;
+	    enable = true;
 
 	    database = {
 	      createLocally = false;
