@@ -780,7 +780,7 @@ in
 	    "ftc25671.com" = {
 	      hostName = "ftc25671.com";
 	      listen = [ { port = 80; } ];
-	      serverAliases = [ "ftc25dgxyd6xxmo7mzhjjhuvpvfvrjntfxxsoczawuyrwri4evm5tgad.onion" ];
+	      serverAliases = [ "ftc25dgxyd6xxmo7mzhjjhuvpvfvrjntfxxsoczawuyrwri4evm5tgad.onion" "ftc25671.com" "192.168.1.210/" ];
 	      documentRoot = "/srv/http/wordpress";
 
 	      extraConfig = ''
