@@ -16,7 +16,6 @@
     "d /srv/http/errors 0755 root root - -"
   ];
 
-  users.users.nginx.extraGroups = [ "nextcloud" ];
 
   services.phpfpm.pools.nextcloud.settings = {
     "listen.owner" = "nginx";
@@ -45,7 +44,6 @@
 	    mediawiki-onion = { map = [ { port = 80; target.port = 8086; } ]; version = 3; };
 	    node1-onion     = { map = [ { port = 80; target.port = 8082; } ]; version = 3; };
 	    node2-onion     = { map = [ { port = 80; target.port = 4433; } ]; version = 3; };
-	    nginx-onion     = { map = [ { port = 80; target.port = 8085; } ]; version = 3; };
             swing-onion     = { map = [ { port = 80; target.port = 4533; } ]; version = 3; };
 	  };
 	};

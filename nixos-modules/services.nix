@@ -890,8 +890,6 @@ in
 			RequestHeader set X-Forwarded-Proto "https"
 		      '';
 		    };
-
-	    # 7. NEXTCLOUD
 	  };
 	};
 
