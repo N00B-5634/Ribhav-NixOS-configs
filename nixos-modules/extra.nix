@@ -17,11 +17,6 @@
   ];
 
 
-  services.phpfpm.pools.nextcloud.settings = {
-    "listen.owner" = "nginx";
-    "listen.group" = "nextcloud";
-    "listen.mode" = "0660";
-  };
 
   programs.nix-ld.enable = true;
 
