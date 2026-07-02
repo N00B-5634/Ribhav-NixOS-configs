@@ -145,22 +145,6 @@ in
     };
   };
 
-  systemd.services."cloudflared-tunnel-bfeef92d-ce16-4139-b8e5-6011a3710df7" = {
-    after = [ "network-online.target" ];
-    wantedBy = [ "multi-user.target" ];
-
-    serviceConfig = {
-      EnvironmentFile =
-        "/var/lib/cloudflare-tunnels/token_nextcloud";
-
-      ExecStart =
-        "${pkgs.cloudflared}/bin/cloudflared tunnel --no-autoupdate run --token \${CLOUDFLARE_TUNNEL_TOKEN_NEXTCLOUD}";
-
-      Restart = "always";
-      RestartSec = "5";
-      DynamicUser = true;
-    };
-  };
 
   systemd.services."cloudflared-tunnel-27a037b8-e0c3-4ea6-84b0-87e18e435c6d" = {
     after = [ "network-online.target" ];
@@ -378,55 +362,6 @@ in
 	    RemainAfterExit = true;
 	  };
 	};
-   services.nextcloud = {
-    enable = true;
-    hostName = "nextcloud.ftc25671.com";
-    package = pkgs.nextcloud33;
-
-    https = false;
-
-    # Explicit, official Nextcloud settings validated for the NixOS module engine
-    settings = {
-      trusted_proxies = [ "127.0.0.1" ];
-      overwriteprotocol = "https";
-      overwritehost = "nextcloud.ftc25671.com";
-      overwritecondaddr = "^127\\.0\\.0\\.1$";
-      "overwrite.cli.url" = "https://nextcloud.ftc25671.com";
-
-      # Whitelists both the clear-web subdomain and your exact custom dark-web vanity path
-      trusted_domains = [
-        "ftc257yymkwirtbzir7gzqphgcyx4oowvn5vm6oyal3ehpywmu3ampad.onion"
-      ];
-    };
-
-    config = {
-      dbtype = "sqlite";
-      adminpassFile = "/etc/nextcloud-admin-pass";
-    };
-
-    extraApps = {
-      oidc_login = pkgs.fetchNextcloudApp {
-        url = "https://github.com/pulsejet/nextcloud-oidc-login/releases/download/v3.3.1/oidc_login.tar.gz";
-        sha256 = "KBa8A7aC0uS6FQoOSa7nIkaaYe+A2KeAtzfqoKw0Gn4=";
-        license = "gpl3";
-      };
-    };
-
-    extraAppsEnable = true;
-  };
-
-  services.nginx.virtualHosts."nextcloud.ftc25671.com" = {
-    listen = [
-      {
-        addr = "127.0.0.1";
-        port = 8085;
-      }
-    ];
-
-    addSSL = false;
-    forceSSL = false;
-  };
-
 	    services.keycloak = {
 	    enable = true;
 
@@ -957,17 +892,6 @@ in
 		    };
 
 	    # 7. NEXTCLOUD
-	    "nextcloud.ftc25671.com" = {
-	      hostName = "nextcloud.ftc25671.com";
-	      extraConfig = ''
-		Header set Onion-Location "http://ftc257yymkwirtbzir7gzqphgcyx4oowvn5vm6oyal3ehpywmu3ampad.onion"
-		ProxyPreserveHost On
-		ProxyPass / http://127.0.0.1:8085/
-		ProxyPassReverse / http://127.0.0.1:8085/
-		RequestHeader set X-Forwarded-Port "443"
-		RequestHeader set X-Forwarded-Proto "https"
-	      '';
-	    };
 	  };
 	};
 
