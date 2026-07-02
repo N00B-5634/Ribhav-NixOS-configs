@@ -18,6 +18,7 @@ in
     shell = pkgs.zsh;
 
     packages = with pkgs; [
+      ncdu
       eza
       tree
       bat
@@ -36,24 +37,18 @@ in
       go
       curl
       wget
-      zoxide
       rsnapshot
       restic
       openssh
-      wireguard-tools
-      curlie
       iperf3
       neovim
       starship
       git
       gh
-      kalker
-      prismlauncher
       vscode
       vlc
       mpv
       flameshot
-      alacritty
       fastfetch
       zsh-syntax-highlighting
       zsh-autosuggestions
