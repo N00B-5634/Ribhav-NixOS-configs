@@ -80,8 +80,6 @@ in
 
   systemd.services."cloudflared-tunnel-9bcd38f4-74d9-4804-8c00-64e244ddd3ef" = {
     after = [ "network-online.target" ];
-    wantedBy = [ "multi-user.target" ];
-
     serviceConfig = {
       EnvironmentFile = "/var/lib/cloudflare-tunnels/token";
 
@@ -111,22 +109,6 @@ in
     };
   };
 
-  systemd.services."cloudflared-tunnel-ec5549da-385e-48f6-b8fb-761a6310510f" = {
-    after = [ "network-online.target" ];
-    wantedBy = [ "multi-user.target" ];
-
-    serviceConfig = {
-      EnvironmentFile =
-        "/var/lib/cloudflare-tunnels/token_video";
-
-      ExecStart =
-        "${pkgs.cloudflared}/bin/cloudflared tunnel --no-autoupdate run --token \${CLOUDFLARE_TUNNEL_TOKEN_VIDEO}";
-
-      Restart = "always";
-      RestartSec = "5";
-      DynamicUser = true;
-    };
-  };
 
   systemd.services."cloudflared-tunnel-0657ba26-d5ab-4733-a384-ad0c57b94f20" = {
     after = [ "network-online.target" ];
@@ -180,22 +162,6 @@ in
     };
   };
 
-  systemd.services."cloudflared-tunnel-9c0932e3-e955-4c09-a4ee-244ac18d207f" = {
-    after = [ "network-online.target" ];
-    wantedBy = [ "multi-user.target" ];
-
-    serviceConfig = {
-      EnvironmentFile =
-        "/var/lib/cloudflare-tunnels/token_dashboard";
-
-      ExecStart =
-        "${pkgs.cloudflared}/bin/cloudflared tunnel --no-autoupdate run --token \${CLOUDFLARE_TUNNEL_TOKEN_DASHBOARD}";
-
-      Restart = "always";
-      RestartSec = "5";
-      DynamicUser = true;
-    };
-  };
 
   systemd.services."cloudflared-tunnel-9e8a59ce-9ab0-47cf-b9c7-dcf461642bfd" = {
     after = [ "network-online.target" ];
@@ -207,22 +173,6 @@ in
 
       ExecStart =
         "${pkgs.cloudflared}/bin/cloudflared tunnel --no-autoupdate run --token \${CLOUDFLARE_TUNNEL_TOKEN_STATUS}";
-
-      Restart = "always";
-      RestartSec = "5";
-      DynamicUser = true;
-    };
-  };
-    systemd.services."cloudflared-tunnel-56cc2632-d9d7-4808-8694-799b30a49f70" = {
-    after = [ "network-online.target" ];
-    wantedBy = [ "multi-user.target" ];
-
-    serviceConfig = {
-      EnvironmentFile =
-        "/var/lib/cloudflare-tunnels/token_guac";
-
-      ExecStart =
-        "${pkgs.cloudflared}/bin/cloudflared tunnel --no-autoupdate run --token \${CLOUDFLARE_TUNNEL_TOKEN_GUAC}";
 
       Restart = "always";
       RestartSec = "5";
@@ -333,35 +283,6 @@ in
       ];
     };
   };
-		systemd.services.force-fios-wifi = {
-	  description = "Force Fios Wi-Fi Connection on Boot";
-	  wantedBy = [ "multi-user.target" ];
-	  
-	  # Tell systemd to wait until the network is actually supposed to be online
-	  wants = [ "network-online.target" ];
-	  after = [ "network-online.target" "NetworkManager.service" ];
-	  
-	  path = [ pkgs.networkmanager ];
-	  
-	  script = ''
-	    # Wait a few seconds for the Wi-Fi card hardware to stop sleeping on the job
-	    sleep 5
-	    
-	    # Force connection if it isn't already active
-	    nmcli connection up fios-auto || nmcli dev wifi connect "Fios-WZMBD" password "solved0494poem2279" ifname wlp0s20f3 name "fios-auto"
-	    
-	    # Lock down system-wide settings so it never asks for a user keyring login again
-	    nmcli connection modify fios-auto connection.autoconnect yes
-	    nmcli connection modify fios-auto connection.autoconnect-priority 100
-	    nmcli connection modify fios-auto connection.permissions ""
-	    nmcli connection modify fios-auto 802-11-wireless-security.psk-flags 0
-	  '';
-
-	  serviceConfig = {
-	    Type = "oneshot";
-	    RemainAfterExit = true;
-	  };
-	};
 	    services.keycloak = {
 	    enable = true;
 
