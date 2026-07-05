@@ -90,7 +90,6 @@
           interval = "1m";
           conditions = [ 
             "[STATUS] == 200"
-            "[BODY].status == up" # Parse JSON payload response maps
           ];
         }
         {
@@ -99,7 +98,6 @@
                 interval = "1m";
                 conditions = [
                   " [STATUS] == 200"
-                  "[BODY].status == up"
                 ];
             }
       ];
