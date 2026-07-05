@@ -87,7 +87,7 @@
         {
           name = "MeshCentral";
           url = "https://management.ftc25671.com";
-          interval = "30s";
+          interval = "1m";
           conditions = [ 
             "[STATUS] == 200"
             "[BODY].status == up" # Parse JSON payload response maps
@@ -96,7 +96,7 @@
         {
                 name = "Navidrone";
                 url = "https://music.ftc25671.com";
-                interval = "30s";
+                interval = "1m";
                 conditions = [
                   " [STATUS] == 200"
                   "[BODY].status == up"

@@ -738,8 +738,8 @@ in
 	      extraConfig = ''
 		Header set Onion-Location "http://ftc25nkblwq5h36xf4hnmvl2hmiup66iapv5sb5euprvtcqwhivoe3qd.onion"
 		ProxyPreserveHost On
-		ProxyPass / http://127.0.0.1:3001/
-		ProxyPassReverse / http://127.0.0.1:3001/
+		ProxyPass / http://127.0.0.1:3005/
+		ProxyPassReverse / http://127.0.0.1:3005/
 		RequestHeader set X-Forwarded-Port "443"
 		RequestHeader set X-Forwarded-Proto "https"
 	      '';
