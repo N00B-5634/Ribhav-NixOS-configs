@@ -66,7 +66,7 @@
                 conditions = [
                   " [STATUS] == 200"
                   "[BODY].status == up"
-                ]
+                ];
             }
       ];
     };
