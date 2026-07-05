@@ -2,7 +2,7 @@
   description = "Unified Master Multi-Machine Flake Workspace";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
+    nixpkgs.url = "github:nixos/nixpkgs/unstable";
     
     # Introduce Home Manager tracking the unstable branch
     home-manager = {
