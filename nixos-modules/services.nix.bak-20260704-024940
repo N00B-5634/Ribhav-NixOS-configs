@@ -712,7 +712,7 @@ in
 	  ];
 
 	  virtualHosts = {
-	    "a-main-ftc25671.com" = {
+	    "ftc25671.com" = {
 	      hostName = "ftc25671.com";
 	      listen = [ { port = 80; } ];
 	      serverAliases = [ "ftc25dgxyd6xxmo7mzhjjhuvpvfvrjntfxxsoczawuyrwri4evm5tgad.onion" "ftc25671.com" "192.168.1.210/" ];
@@ -888,15 +888,6 @@ in
 			ProxyPassReverse / http://127.0.0.1:8080/
 			RequestHeader set X-Forwarded-Port "443"
 			RequestHeader set X-Forwarded-Proto "https"
-            <IfModule mod_mime.c>
-    # Force specific developer extensions to render as plain text
-    AddType text/plain .nix
-    AddType text/plain .log
-    AddType text/plain .md
-    AddType text/plain .sh
-    AddType text/plain .conf
-</IfModule>
-
 		      '';
 		    };
 	  };
