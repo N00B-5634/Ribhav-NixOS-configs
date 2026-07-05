@@ -56,28 +56,18 @@ in
  
   services.cloudflared = {
     enable = true;
-
-    tunnels = {
-      "f3d06baf-166d-49a0-b5e3-ff8726be809a" = {
-        credentialsFile =
-          "/var/lib/cloudflare-tunnels/cld-tun.json";
-
-        ingress = {
-          "ftc25671.com" = "http://localhost:80";
-        };
-
-        default = "http_status:404";
-      };
-    };
-  };
-
+   };
   systemd.services."cloudflared-tunnel-f3d06baf-166d-49a0-b5e3-ff8726be809a" = {
-    serviceConfig.ExecStart = [
-      ""
-      "${pkgs.cloudflared}/bin/cloudflared tunnel --protocol http2 run f3d06baf-166d-49a0-b5e3-ff8726be809a"
-    ];
-  };
-
+  after = [ "network-online.target" ];
+  serviceConfig = {
+    EnvironmentFile = "/var/lib/cloudflare-tunnels/token_wordpress";
+    ExecStart =
+      "${pkgs.cloudflared}/bin/cloudflared tunnel --no-autoupdate run --token \${CLOUDFLARE_TUNNEL_TOKEN_WORDPRESS}";
+    Restart = "always";
+    RestartSec = "5";
+    DynamicUser = true;
+   };
+ };
   systemd.services."cloudflared-tunnel-9bcd38f4-74d9-4804-8c00-64e244ddd3ef" = {
     after = [ "network-online.target" ];
     serviceConfig = {
