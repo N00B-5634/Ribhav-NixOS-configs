@@ -10,6 +10,7 @@
     ./nixos-modules/services.nix
     ./nixos-modules/users.nix
     ./nixos-modules/backup.nix
+    ./nixos-modules/gatus.nix
   ];
 
   system.stateVersion = "25.05";
