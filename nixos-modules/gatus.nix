@@ -15,27 +15,61 @@
         title = "Purple Dragon STATUS";
         header = "Core Network Infrastructure";
         # Inject raw CSS properties directly onto the DOM hooks
-        custom-css = ''
-          #global {
-            font-family: 'Inter', sans-serif;
-            background-color: #0f141c !important;
-            color: #e2e8f0;
-          }
-          .dashboard-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-          }
-          .endpoint {
-            border-radius: 12px !important;
-            border: 1px solid #1e293b !important;
-            background-color: #1a2333 !important;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
-          }
-          .endpoint-header {
-            font-weight: 700;
-            letter-spacing: -0.025em;
-          }
+        custom-css = '' /* Global Background - Deep Purple */
+    #global { 
+      background-color: #2D142C !important; 
+      color: #FEE7F0 !important; /* Very light pink text */
+    }
+    
+    /* Dashboard Area - Lavender */
+    .dashboard-container { 
+      background-color: #E6E6FA !important; 
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    /* Endpoint Cards - Pink */
+    .endpoint, .endpoint-group { 
+      background-color: #FFB6C1 !important; 
+      border: 2px solid #C71585 !important; /* Medium Violet Red/Magenta border */
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      margin-bottom: 15px;
+    }
+
+    /* Endpoint Headers - Magenta */
+    .endpoint-header, .endpoint-group-header { 
+      background-color: #FF00FF !important; 
+      color: #FFFFFF !important; 
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+    }
+
+    /* Endpoint Content Area - Lighter Pink */
+    .endpoint-content, .endpoint-group-content { 
+      background-color: #FFF0F5 !important; /* Lavender Blush */
+      color: #4B0082 !important; /* Indigo/Dark Purple text for readability */
+    }
+
+    /* Status Badges - Yellow & Purple */
+    .bg-success { 
+      background-color: #FFD700 !important; /* Yellow for UP status instead of green */
+      color: #2D142C !important; /* Dark purple text inside yellow badge */
+    }
+    .bg-danger {
+      background-color: #8A2BE2 !important; /* Blue-Violet for DOWN status instead of red */
+      color: #FFFFFF !important;
+    }
+
+    /* Announcements Container (if used) */
+    .announcement-container {
+      background-color: #DDA0DD !important; /* Plum */
+      border: 2px dashed #FFD700 !important; /* Yellow border */
+    }
+    .announcement-header {
+      background-color: #800080 !important; /* Purple */
+      color: #FFFFFF !important;
+    }
         '';
       };
 
