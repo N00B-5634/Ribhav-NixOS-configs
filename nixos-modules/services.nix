@@ -705,6 +705,7 @@ $wgHooks['ParserFirstCallInit'][] = function ( $parser ) {
 		  extraConfig = ''
 	    ServerTokens ProductOnly
 	    ServerSignature Off
+            FileETag None
 	  '';
 	  virtualHosts = {
 	    "a-main-ftc25671.com" = {
@@ -763,42 +764,58 @@ $wgHooks['ParserFirstCallInit'][] = function ( $parser ) {
 	    }; 
             
 
-	    "wiki.ftc25671.com" = {
-	      hostName = "wiki.ftc25671.com";
-	      listen = [ { port = 8086; } ];
-	      serverAliases = [ "www.wiki.ftc25671.com" "127.0.0.1" ];
-	      adminAddr = "ribsai@outlook.com";
-	      enableACME = false;
-	      forceSSL = false;
-	      documentRoot = "/srv/http/wiki";
+		       "wiki.ftc25671.com" = {
+	  hostName = "wiki.ftc25671.com";
+	  listen = [ { port = 8086; } ];
+	  serverAliases = [ "www.wiki.ftc25671.com" "127.0.0.1" ];
+	  adminAddr = "ribsai@outlook.com";
+	  enableACME = false;
+	  forceSSL = false;
+	  documentRoot = "/srv/http/wiki";
 
-	      extraConfig = ''
-		<Directory "/srv/http/wiki">
-		  AllowOverride None
-		  Require all granted
-		  DirectoryIndex index.php index.html
-		</Directory>
+	  extraConfig = ''
+	    FileETag None
 
-		<FilesMatch "^(LocalSettings\.php|AdminSettings\.php|composer\.(json|lock)|\.htaccess|\.git)">
-		  Require all denied
-		</FilesMatch>
+	    <IfModule mod_headers.c>
+	      # Remove unnecessary info
+	      Header always unset X-Powered-By
+	      Header always unset Server
 
-		<DirectoryMatch "^/srv/http/wiki/(images|cache)">
-		  <FilesMatch "\.php$">
-		    Require all denied
-		  </FilesMatch>
-		</DirectoryMatch>
+	      # Security headers
+	      Header always set X-Content-Type-Options "nosniff"
+	      Header always set X-Frame-Options "SAMEORIGIN"
+	      Header always set X-XSS-Protection "1; mode=block"
+	      Header always set Content-Security-Policy "frame-ancestors 'self'"
+	      Header always set Referrer-Policy "strict-origin-when-cross-origin"
+	      Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+	    </IfModule>
 
-		Alias /errors /srv/http/errors
-		<Directory "/srv/http/errors">
-		  AllowOverride None
-		  Require all granted
-		</Directory>
+	    <Directory "/srv/http/wiki">
+	      AllowOverride None
+	      Require all granted
+	      DirectoryIndex index.php index.html
+	    </Directory>
 
-		ErrorDocument 403 /errors/403.html
-		ErrorDocument 404 /errors/404.html
-	      '';
-	    };
+	    <FilesMatch "^(LocalSettings\.php|AdminSettings\.php|composer\.(json|lock)|\.htaccess|\.git)">
+	      Require all denied
+	    </FilesMatch>
+
+	    <DirectoryMatch "^/srv/http/wiki/(images|cache)">
+	      <FilesMatch "\.php$">
+		Require all denied
+	      </FilesMatch>
+	    </DirectoryMatch>
+
+	    Alias /errors /srv/http/errors
+	    <Directory "/srv/http/errors">
+	      AllowOverride None
+	      Require all granted
+	    </Directory>
+
+	    ErrorDocument 403 /errors/403.html
+	    ErrorDocument 404 /errors/404.html
+	  '';
+	};
 		     "tor-wordpress-onion" = {
 	    hostName = "ftc25dgxyd6xxmo7mzhjjhuvpvfvrjntfxxsoczawuyrwri4evm5tgad.onion";
 	    onlySSL = true;
