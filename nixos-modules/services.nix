@@ -375,7 +375,6 @@ in
       # OPcache (performance)
       opcache.enable = 1
       opcache.enable_cli = 1
-      opcache.file_cache = "/var/cache/php-opcache"
 
       # Disallow remote includes (LFI protection), but keep URL fopen for extensions
       allow_url_include = Off
@@ -453,8 +452,6 @@ $wgAutoConfirmCount = 10;
 # Security: rate limiting for sensitive actions
 # (You already have edit rate limits; add more)
 $wgRateLimits['login']['user'] = [ 5, 300 ];         # 5 logins per 5 minutes
-$wgRateLimits['emailuser']['user'] = [ 5, 60 * 60 ]; # 5 emails per hour
-
 # ConfirmEdit/QuestyCaptcha setup
 wfLoadExtension( 'ConfirmEdit' );
 wfLoadExtension( 'ConfirmEdit/QuestyCaptcha' );
@@ -681,8 +678,6 @@ $wgHooks['ParserFirstCallInit'][] = function ( $parser ) {
 	    # OPcache (performance + minor hardening)
 	    opcache.enable = 1
 	    opcache.enable_cli = 1
-	    opcache.file_cache = "/var/cache/php-opcache"
-
 	    # Disallow remote includes (saves against LFI via URL), but keep URL fopen for updates/firewall defs
 	    allow_url_include = Off
 	    # allow_url_fopen = Off   # ← DO NOT enable this; it breaks NinjaFirewall and similar
