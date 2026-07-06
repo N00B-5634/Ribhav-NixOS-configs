@@ -592,7 +592,7 @@ in
 	    "a-main-ftc25671.com" = {
 	      hostName = "ftc25671.com";
 	      listen = [ { port = 80; } ];
-	      serverAliases = [ "ftc25dgxyd6xxmo7mzhjjhuvpvfvrjntfxxsoczawuyrwri4evm5tgad.onion" "ftc25671.com" "192.168.1.210/" ];
+	      serverAliases = [ "ftc25671.com" "192.168.1.210/" ];
 	      documentRoot = "/srv/http/wordpress";
 
 	      extraConfig = ''
@@ -642,7 +642,8 @@ in
 		ProxyPass "/haiku-api/" "https://depot.haiku-os.org/"
 		ProxyPassReverse "/haiku-api/" "https://depot.haiku-os.org/"
 	      '';
-	    };
+	    }; 
+            
 
 	    "wiki.ftc25671.com" = {
 	      hostName = "wiki.ftc25671.com";
@@ -680,6 +681,59 @@ in
 		ErrorDocument 404 /errors/404.html
 	      '';
 	    };
+            "tor-wordpress-onion" = {
+    hostName = "ftc25dgxyd6xxmo7mzhjjhuvpvfvrjntfxxsoczawuyrwri4evm5tgad.onion";
+    
+    # Force SSL on port 443 and map your newly made custom certificates
+    onlySSL = true;
+    sslServerCert = "/var/lib/httpd/onion-certs/onion.crt";
+    sslServerKey = "/var/lib/httpd/onion-certs/onion.key";
+
+    documentRoot = "/srv/http/wordpress";
+
+    extraConfig = ''
+      Protocols http/1.1
+      KeepAlive Off
+      <Directory "/srv/http/wordpress">
+          AllowOverride All
+          Require all granted
+          DirectoryIndex index.php index.html
+      </Directory>
+      <FilesMatch "^(wp-config\.php|xmlrpc\.php|composer\.(json|lock)|readme\.html|license\.txt|\.htaccess|\.git)">
+          Require all denied
+      </FilesMatch>
+      <Directory "/srv/http/wordpress/wp-content/uploads">
+          <FilesMatch "\.php$">
+              Require all denied
+          </FilesMatch>
+      </Directory>
+      Alias /errors /srv/http/errors
+      <Directory "/srv/http/errors">
+          AllowOverride None
+          Require all granted
+      </Directory>
+      ErrorDocument 403 /errors/403.html
+      ErrorDocument 404 /errors/404.html
+      
+      # Forces internal WordPress functions to map assets using https://
+      SetEnv HTTPS on
+
+      RemoteIPHeader X-Forwarded-For
+      Header always unset X-Frame-Options
+      # Changed to secure your onion address's context specifically
+      Header always set Content-Security-Policy "frame-ancestors 'self' ftc25dgxyd6xxmo7mzhjjhuvpvfvrjntfxxsoczawuyrwri4evm5tgad.onion"
+      
+      <FilesMatch "\.php$">
+          SetHandler "proxy:unix:/run/phpfpm/wordpress.sock|fcgi://localhost"
+      </FilesMatch>
+      SSLProxyEngine On
+      SSLProxyVerify none
+      SSLProxyCheckPeerName off
+      ProxyPreserveHost On
+      ProxyPass "/haiku-api/" "https://depot.haiku-os.org/"
+      ProxyPassReverse "/haiku-api/" "https://depot.haiku-os.org/"
+     '';
+   };
 
 	    # 1. KEYCLOAK
 	    "sso.ftc25671.com" = {
