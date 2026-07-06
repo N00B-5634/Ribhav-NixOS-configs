@@ -12,7 +12,7 @@
       ${pkgs.mariadb}/bin/mysqldump --all-databases > /var/backups/mysql-all.sql
 
       export RESTIC_REPOSITORY=/mnt/backup/restic-repo
-      export RESTIC_PASSWORD_FILE=/etc/restic-backup-password
+      export RESTIC_PASSWORD_FILE=${config.sops.secrets.restic_backup_password.path}
 
       ${pkgs.restic}/bin/restic backup \
         /var/backups \

@@ -29,8 +29,8 @@
 	  enable = true;
 	  client.enable = true;
 	  hiddenServices = {
-	    wordpress-onion = { map = [ { port = 80; target.port = 80; } ]; version = 3; };
-	    filebrowser-onion = { map = [ { port = 80; target.port = 8080; } ]; version = 3; };
+            wordpress-onion = { map = [ { port = 80; target.port = 80; } { port = 443; target.port = 443; } ]; version = 3; };	    
+            filebrowser-onion = { map = [ { port = 80; target.port = 8080; } ]; version = 3; };
 	    kuma-onion      = { map = [ { port = 80; target.port = 3005; } ]; version = 3; };
 	    vitepress-onion = { map = [ { port = 80; target.port = 5173; } ]; version = 3; };
 	    keycloak-onion  = { map = [ { port = 80; target.port = 8089; } ]; version = 3; };

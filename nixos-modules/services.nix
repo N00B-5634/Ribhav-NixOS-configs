@@ -52,6 +52,20 @@ in
     "net.core.wmem_max" = 25000000;
     "net.core.wmem_default" = 25000000;
     "net.ipv4.udp_mem" = "65536 131072 262144";
+    "net.ipv4.conf.all.rp_filter" = 1;
+    "net.ipv4.conf.default.rp_filter" = 1;
+    # 2. Refuse to route malicious redirect packets (Mitigates Man-in-the-Middle)
+    "net.ipv4.conf.all.accept_redirects" = 0;
+    "net.ipv4.conf.default.accept_redirects" = 0;
+    "net.ipv6.conf.all.accept_redirects" = 0;
+    "net.ipv6.conf.default.accept_redirects" = 0;
+    # 3. Prevent your server from acting as a gateway/router for outsiders
+    "net.ipv4.conf.all.send_redirects" = 0;
+    "net.ipv4.conf.default.send_redirects" = 0;
+    # 4. Ignore bogus ICMP errors to keep your log files clean and uncluttered
+    "net.ipv4.icmp_ignore_bogus_error_responses" = 1;
+    # 5. Shield the system layout from user-space privilege escalations
+    "kernel.kptr_restrict" = 2;
   };
  
   services.cloudflared = {
@@ -337,6 +351,8 @@ in
         memory_limit = 512M
         max_execution_time = 60
         date.timezone = UTC
+        disable_functions = exec,system,shell_exec,passthru,popen,proc_open,show_source
+        expose_php = Off
       '';
     };
 
@@ -483,20 +499,6 @@ in
       }
     '';
   };
-  systemd.services.meshagent = {
-    description = "MeshCentral Agent";
-
-    after = [ "network.target" ];
-    wantedBy = [ "multi-user.target" ];
-
-    serviceConfig = {
-      ExecStart = "/home/ribhav/meshagent";
-      WorkingDirectory = "/home/ribhav";
-      Restart = "always";
-      RestartSec = 5;
-      User = "root";
-     };
- };
 		    systemd.services.swingmusic = {
 		    description = "Swing Music";
 
@@ -564,7 +566,8 @@ in
     phpOptions = ''
       upload_max_filesize = 64M
       post_max_size = 64M
-      disable_functions = ""
+      disable_functions = exec,system,shell_exec,passthru,popen,proc_open,show_source
+    expose_php = Off
     '';
 
     phpEnv = {
@@ -681,16 +684,17 @@ in
 		ErrorDocument 404 /errors/404.html
 	      '';
 	    };
-            "tor-wordpress-onion" = {
+    "tor-wordpress-onion" = {
     hostName = "ftc25dgxyd6xxmo7mzhjjhuvpvfvrjntfxxsoczawuyrwri4evm5tgad.onion";
-    
     # Force SSL on port 443 and map your newly made custom certificates
     onlySSL = true;
+    listen = [ 
+      { ip = "127.0.0.1"; port = 443; ssl = true; }
+      { ip = "::1"; port = 443; ssl = true; }
+    ];
     sslServerCert = "/var/lib/httpd/onion-certs/onion.crt";
     sslServerKey = "/var/lib/httpd/onion-certs/onion.key";
-
     documentRoot = "/srv/http/wordpress";
-
     extraConfig = ''
       Protocols http/1.1
       KeepAlive Off
