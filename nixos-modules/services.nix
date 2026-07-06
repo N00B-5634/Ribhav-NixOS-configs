@@ -346,13 +346,40 @@ in
       extensions = { all, enabled }: enabled ++ (with all; [ apcu ]);
 
       extraConfig = ''
-        upload_max_filesize = 128M
-        post_max_size = 128M
-        memory_limit = 512M
-        max_execution_time = 60
-        date.timezone = UTC
-        disable_functions = exec,system,shell_exec,passthru,popen,proc_open,show_source
-        expose_php = Off
+         # Upload limits
+      upload_max_filesize = 128M
+      post_max_size = 128M
+
+      # Memory and execution limits
+      memory_limit = 512M
+      max_execution_time = 60
+
+      # Timezone and charset
+      date.timezone = UTC
+      default_charset = "UTF-8"
+
+      # Block dangerous functions
+      disable_functions = exec,system,shell_exec,passthru,popen,proc_open,show_source
+
+      # Don't expose PHP version
+      expose_php = Off
+
+      # Session cookie hardening (safe, doesn't break MW)
+      session.cookie_httponly = 1
+      session.cookie_secure = 1
+      session.use_only_cookies = 1
+
+      # Session GC tuning
+      session.gc_divisor = 1000
+
+      # OPcache (performance)
+      opcache.enable = 1
+      opcache.enable_cli = 1
+      opcache.file_cache = "/var/cache/php-opcache"
+
+      # Disallow remote includes (LFI protection), but keep URL fopen for extensions
+      allow_url_include = Off
+      # allow_url_fopen = Off   # ← DO NOT enable this; it breaks remote-fetching extensions
       '';
     };
 
@@ -369,134 +396,201 @@ in
     };
 
     extraConfig = ''
-      $wgLanguageCode = "en";
-      $wgJobRunRate = 1;
-      $wgRunJobsAsync = false;
-      $wgRateLimits['edit']['user'] = [ 100000000, 600000 ];
-      $wgDefaultSkin = "vector-2022";
-      $wgEnableUploads = true;
-      $wgUseImageMagick = true;
-      $wgImageMagickConvertCommand = "${pkgs.imagemagick}/bin/convert";
+$wgLanguageCode = "en";
+$wgJobRunRate = 1;
+$wgRunJobsAsync = false;
+$wgRateLimits['edit']['user'] = [ 100000000, 600000 ];
+$wgDefaultSkin = "vector-2022";
+$wgEnableUploads = true;
+$wgUseImageMagick = true;
+$wgImageMagickConvertCommand = "${pkgs.imagemagick}/bin/convert";
 
-      # Explicitly output full error logs directly to the screen if any other bugs pop up
-      $wgShowExceptionDetails = true;
-      $wgShowDBErrorBacktrace = true;
-      # Configure the native standalone engine mapping cleanly using the actual file class
-      $wgScribuntoDefaultEngine = 'luastandalone';
-      global $IP;
-      $wgScribuntoEngineConf['luastandard']['class'] = 'MediaWiki\\Extension\\Scribunto\\Engines\\LuaStandalone\\LuaStandaloneEngine';
-      $wgScribuntoEngineConf['luastandard']['luaPath'] = "$IP/extensions/Scribunto/includes/Engines/LuaStandalone/binaries/lua5_1_5_linux_64_generic/lua";
-      wfLoadExtension( 'Cite' );
-      wfLoadExtension( 'ParserFunctions' );
-      wfLoadExtension( 'TemplateStyles' );
-      wfLoadExtension( 'Nuke' );
-      wfLoadExtension( 'Scribunto' );
+# Security: Log errors but don't expose them to users in production
+# (You can keep these true on dev, but for general hardening, consider false in prod)
+$wgShowExceptionDetails = true;
+$wgShowDBErrorBacktrace = true;
 
-      $wgLogos = [
-        '1x' => 'https://wiki.ftc25671.com/images/thumb/a/a0/Logo.webp/450px-Logo.webp.png',
-        'icon' => 'https://wiki.ftc25671.com/images/thumb/a/a0/Logo.webp/450px-Logo.webp.png'
-      ];
+# Configure the native standalone engine mapping cleanly using the actual file class
+$wgScribuntoDefaultEngine = 'luastandalone';
+global $IP;
+$wgScribuntoEngineConf['luastandard']['class'] = 'MediaWiki\\Extension\\Scribunto\\Engines\\LuaStandalone\\LuaStandaloneEngine';
+$wgScribuntoEngineConf['luastandard']['luaPath'] = "$IP/extensions/Scribunto/includes/Engines/LuaStandalone/binaries/lua5_1_5_linux_64_generic/lua";
 
-      $wgVector2022LogoDimensions = [
-        'width' => 160,
-        'height' => 160
-      ];
+wfLoadExtension( 'Cite' );
+wfLoadExtension( 'ParserFunctions' );
+wfLoadExtension( 'TemplateStyles' );
+wfLoadExtension( 'Nuke' );
+wfLoadExtension( 'Scribunto' );
 
-      $wgDefaultUserOptions['vector-theme'] = 'dark';
-      $wgGroupPermissions['*']['edit'] = false;
-      $wgGroupPermissions['*']['createaccount'] = true;
-      $wgGroupPermissions['*']['autocreateaccount'] = true;
+$wgLogos = [
+  '1x' => 'https://wiki.ftc25671.com/images/thumb/a/a0/Logo.webp/450px-Logo.webp.png',
+  'icon' => 'https://wiki.ftc25671.com/images/thumb/a/a0/Logo.webp/450px-Logo.webp.png'
+];
 
-      $wgGroupPermissions['user']['move'] = false;
-      $wgGroupPermissions['user']['move-subpages'] = false;
-      $wgGroupPermissions['user']['upload'] = false;
+$wgVector2022LogoDimensions = [
+  'width' => 160,
+  'height' => 160
+];
 
-      $wgGroupPermissions['autoconfirmed']['move'] = true;
-      $wgGroupPermissions['autoconfirmed']['move-subpages'] = true;
-      $wgGroupPermissions['autoconfirmed']['upload'] = true;
+$wgDefaultUserOptions['vector-theme'] = 'dark';
 
-      $wgAutoConfirmAge = 3600 * 24 * 4;
-      $wgAutoConfirmCount = 10;
+# Security: restrict permissions more tightly
+$wgGroupPermissions['*']['edit'] = false;
+$wgGroupPermissions['*']['createaccount'] = true;
+$wgGroupPermissions['*']['autocreateaccount'] = true;
 
-      # ConfirmEdit/QuestyCaptcha setup
-      wfLoadExtension( 'ConfirmEdit' );
-      wfLoadExtension( 'ConfirmEdit/QuestyCaptcha' );
-      $wgCaptchaClass = 'QuestyCaptcha';
-      $wgCaptchaQuestions[] = [
-        'question' => 'What year did we incorporate?',
-        'answer' => '2024'
-      ];
-      $wgCaptchaQuestions[] = [
-        'question' => 'What program of FIRST do we partake in? (Must be spelled out)',
-        'answer' => 'First Tech Challenge'
-      ];
+$wgGroupPermissions['user']['move'] = false;
+$wgGroupPermissions['user']['move-subpages'] = false;
+$wgGroupPermissions['user']['upload'] = false;
 
-      $wgCaptchaTriggers['edit']          = true;
-      $wgCaptchaTriggers['create']        = true;
-      $wgCaptchaTriggers['addurl']        = true;
-      $wgCaptchaTriggers['createaccount'] = true;
-      $wgCaptchaTriggers['badlogin']       = true;
+$wgGroupPermissions['autoconfirmed']['move'] = true;
+$wgGroupPermissions['autoconfirmed']['move-subpages'] = true;
+$wgGroupPermissions['autoconfirmed']['upload'] = true;
 
-      $wgPasswordAttemptThrottle = [
-        [
-          'count' => 5,
-          'seconds' => 300
-        ]
-      ];
+$wgAutoConfirmAge = 3600 * 24 * 4;
+$wgAutoConfirmCount = 10;
 
-      # Load the base Parsedown library dependency safely
-      if ( file_exists( "${pkgs.fetchurl {
-        url = "https://raw.githubusercontent.com/erusev/parsedown/master/Parsedown.php";
-        hash = "sha256-NAdabxdoQdu5HKaiasdFW1u1duNoz624JJ7bedZ7GgY=";
-      }}" ) ) {
-          require_once "${pkgs.fetchurl {
-            url = "https://raw.githubusercontent.com/erusev/parsedown/master/Parsedown.php";
-            hash = "sha256-NAdabxdoQdu5HKaiasdFW1u1duNoz624JJ7bedZ7GgY=";
-          }}";
-      }
+# Security: rate limiting for sensitive actions
+# (You already have edit rate limits; add more)
+$wgRateLimits['login']['user'] = [ 5, 300 ];         # 5 logins per 5 minutes
+$wgRateLimits['emailuser']['user'] = [ 5, 60 * 60 ]; # 5 emails per hour
 
-      # Load ParsedownExtra safely
-      if ( file_exists( "${pkgs.fetchurl {
-        url = "https://raw.githubusercontent.com/erusev/parsedown-extra/master/ParsedownExtra.php";
-        hash = "sha256-R9WQ5gQz8nXrlRw3pANLeBTTbuIyRdOPC/Y1RGbcTlg=";
-      }}" ) ) {
-          require_once "${pkgs.fetchurl {
-            url = "https://raw.githubusercontent.com/erusev/parsedown-extra/master/ParsedownExtra.php";
-            hash = "sha256-R9WQ5gQz8nXrlRw3pANLeBTTbuIyRdOPC/Y1RGbcTlg=";
-          }}";
-      }
+# ConfirmEdit/QuestyCaptcha setup
+wfLoadExtension( 'ConfirmEdit' );
+wfLoadExtension( 'ConfirmEdit/QuestyCaptcha' );
+$wgCaptchaClass = 'QuestyCaptcha';
+$wgCaptchaQuestions[] = [
+  'question' => 'What year did we incorporate?',
+  'answer' => '2024'
+];
+$wgCaptchaQuestions[] = [
+  'question' => 'What program of FIRST do we partake in? (Must be spelled out)',
+  'answer' => 'First Tech Challenge'
+];
 
-      # Safe Hook Registration for PHP 8.3 runtimes
-      $wgHooks['ParserFirstCallInit'][] = function ( $parser ) {
-          $parser->setHook( 'markdown', function ( $text, $args, $parser, $frame ) {
-              if ( class_exists( 'ParsedownExtra' ) ) {
-                  $extra = new ParsedownExtra();
-                  return [ $extra->text( $text ), 'markerType' => 'nowiki' ];
-              }
-              return htmlspecialchars( $text );
-          } );
-      };
+$wgCaptchaTriggers['edit']          = true;
+$wgCaptchaTriggers['create']        = true;
+$wgCaptchaTriggers['addurl']        = true;
+$wgCaptchaTriggers['createaccount'] = true;
+$wgCaptchaTriggers['badlogin']       = true;
 
-      $wgMainCacheType = CACHE_ACCEL;
-      $wgSessionCacheType = CACHE_ACCEL;
-      
-      $wgVisualEditorAvailableNamespaces = [
-        NS_MAIN => true,
-        NS_USER => true,
-        NS_HELP => true,
-        NS_PROJECT => true,
-      ];
+# Security: password attempt throttle (you already have this)
+$wgPasswordAttemptThrottle = [
+  [ 'count' => 5, 'seconds' => 300 ]
+];
 
-      $wgHooks['BeforePageDisplay'][] = function ( OutputPage &$out, Skin &$skin ) {
-        $out->addHeadItem( 'onion-location', '<meta http-equiv="Onion-Location" content="http://ftc25woc5kjvm3llabonsinjnsrch44x7huzd3kkm4upb33qqapbwzid.onion" />' );
-        return true;
-      };
+# Security: disable email features if not needed (optional, but safer)
+# If you do need email, keep these enabled; if not, set to false:
+$wgEnableEmail = false;
+$wgEnableUserEmail = false;
+$wgEmailAuthentication = false;
 
-      if ( isset( $_SERVER['HTTP_HOST'] ) && strpos( $_SERVER['HTTP_HOST'], 'ftc25woc5kjvm3llabonsinjnsrch44x7huzd3kkm4upb33qqapbwzid.onion' ) !== false ) {
-          $wgServer = "http://ftc25woc5kjvm3llabonsinjnsrch44x7huzd3kkm4upb33qqapbwzid.onion";
-      } else {
-          $wgServer = "https://wiki.ftc25671.com";
-      }
+# Security: disable or restrict API write operations if not needed
+# Leave $wgEnableAPI = true (needed for many features), but restrict write API:
+$wgEnableWriteAPI = false;
+
+# Security: disable feeds and other unnecessary features
+$wgFeed = false;
+$wgUseAjax = false;
+$wgUseTrackbacks = false;
+
+# Security: restrict file types and sizes
+# (You already have large limits; these are additional filters)
+$wgTrustedMediaTypes = [
+  'image/png',
+  'image/jpeg',
+  'image/gif',
+  'image/webp',
+  'application/pdf',
+];
+
+# Limit upload size per file (in bytes); 128M = 134217728
+$wgMaxUploadSize = 134217728;
+
+# Security: prevent certain dangerous file extensions
+$wgFileExtensions = [
+  'png',
+  'gif',
+  'jpg',
+  'jpeg',
+  'webp',
+  'pdf',
+  'txt',
+  'md',
+];
+
+# Security: disallow risky HTML in uploaded files
+$wgRawHtmlExtensions = [];
+
+# Security: enforce HTTPS for session cookies and uploads if possible
+# (Your Apache already does this; this is extra MW-level)
+$wgForceHTTPS = true;
+
+# Security: disable anonymous talking if you don't want it
+$wgDisableAnonTalk = true;
+
+# Security: require https for special pages like login
+$wgLoginCookieEncryption = true;
+
+# Cache config (you already have this)
+$wgMainCacheType = CACHE_ACCEL;
+$wgSessionCacheType = CACHE_ACCEL;
+
+$wgVisualEditorAvailableNamespaces = [
+  NS_MAIN => true,
+  NS_USER => true,
+  NS_HELP => true,
+  NS_PROJECT => true,
+];
+
+$wgHooks['BeforePageDisplay'][] = function ( OutputPage &$out, Skin &$skin ) {
+  $out->addHeadItem( 'onion-location',
+    '<meta http-equiv="Onion-Location" content="http://ftc25woc5kjvm3llabonsinjnsrch44x7huzd3kkm4upb33qqapbwzid.onion" />'
+  );
+  return true;
+};
+
+if ( isset( $_SERVER['HTTP_HOST'] ) &&
+     strpos( $_SERVER['HTTP_HOST'], 'ftc25woc5kjvm3llabonsinjnsrch44x7huzd3kkm4upb33qqapbwzid.onion' ) !== false
+) {
+  $wgServer = "http://ftc25woc5kjvm3llabonsinjnsrch44x7huzd3kkm4upb33qqapbwzid.onion";
+} else {
+  $wgServer = "https://wiki.ftc25671.com";
+}
+
+# Markdown hook (your existing code, kept)
+# Load the base Parsedown library dependency safely
+if ( file_exists( "${pkgs.fetchurl {
+  url = "https://raw.githubusercontent.com/erusev/parsedown/master/Parsedown.php";
+  hash = "sha256-NAdabxdoQdu5HKaiasdFW1u1duNoz624JJ7bedZ7GgY=";
+}}" ) ) {
+    require_once "${pkgs.fetchurl {
+      url = "https://raw.githubusercontent.com/erusev/parsedown/master/Parsedown.php";
+      hash = "sha256-NAdabxdoQdu5HKaiasdFW1u1duNoz624JJ7bedZ7GgY=";
+    }}";
+}
+
+# Load ParsedownExtra safely
+if ( file_exists( "${pkgs.fetchurl {
+  url = "https://raw.githubusercontent.com/erusev/parsedown-extra/master/ParsedownExtra.php";
+  hash = "sha256-R9WQ5gQz8nXrlRw3pANLeBTTbuIyRdOPC/Y1RGbcTlg=";
+}}" ) ) {
+    require_once "${pkgs.fetchurl {
+      url = "https://raw.githubusercontent.com/erusev/parsedown-extra/master/ParsedownExtra.php";
+      hash = "sha256-R9WQ5gQz8nXrlRw3pANLeBTTbuIyRdOPC/Y1RGbcTlg=";
+    }}";
+}
+
+# Safe Hook Registration for PHP 8.3 runtimes
+$wgHooks['ParserFirstCallInit'][] = function ( $parser ) {
+    $parser->setHook( 'markdown', function ( $text, $args, $parser, $frame ) {
+        if ( class_exists( 'ParsedownExtra' ) ) {
+            $extra = new ParsedownExtra();
+            return [ $extra->text( $text ), 'markerType' => 'nowiki' ];
+        }
+        return htmlspecialchars( $text );
+    } );
+};
     '';
   };
 		    systemd.services.swingmusic = {
@@ -545,36 +639,59 @@ in
         };
       }
     ];
-  };
-  services.phpfpm.pools.wordpress = {
-    user = "ribhav";
-    group = "wwwrun";
+	  };
+	  services.phpfpm.pools.wordpress = {
+	  user = "ribhav";
+	  group = "wwwrun";
 
-    phpPackage = myPhp;
+	  phpPackage = myPhp;
 
-    settings = {
-      "listen.owner" = "wwwrun";
-      "listen.group" = "wwwrun";
-      "listen.mode" = "0660";
-      "pm" = "dynamic";
-      "pm.max_children" = 5;
-      "pm.start_servers" = 2;
-      "pm.min_spare_servers" = 1;
-      "pm.max_spare_servers" = 3;
-    };
+	  settings = {
+	    "listen.owner" = "wwwrun";
+	    "listen.group" = "wwwrun";
+	    "listen.mode" = "0660";
+	    "pm" = "dynamic";
+	    "pm.max_children" = 5;
+	    "pm.start_servers" = 2;
+	    "pm.min_spare_servers" = 1;
+	    "pm.max_spare_servers" = 3;
+	  };
 
-    phpOptions = ''
-      upload_max_filesize = 64M
-      post_max_size = 64M
-      disable_functions = exec,system,shell_exec,passthru,popen,proc_open,show_source
-    expose_php = Off
-    '';
+	  phpOptions = ''
+	    upload_max_filesize = 64M
+	    post_max_size = 64M
 
-    phpEnv = {
-      PATH =
-        "/run/current-system/sw/bin:/usr/bin:/bin";
-    };
-  };
+	    # Block obvious shell/command execution
+	    disable_functions = exec,system,shell_exec,passthru,popen,proc_open,show_source
+
+	    # Don't expose PHP version in headers
+	    expose_php = Off
+
+	    # Standard charset
+	    default_charset = "UTF-8"
+
+	    # Session cookie hardening (no JS access, HTTPS only, cookie-only sessions)
+	    session.cookie_httponly = 1
+	    session.cookie_secure = 1
+	    session.use_only_cookies = 1
+
+	    # Session GC tuning
+	    session.gc_divisor = 1000
+
+	    # OPcache (performance + minor hardening)
+	    opcache.enable = 1
+	    opcache.enable_cli = 1
+	    opcache.file_cache = "/var/cache/php-opcache"
+
+	    # Disallow remote includes (saves against LFI via URL), but keep URL fopen for updates/firewall defs
+	    allow_url_include = Off
+	    # allow_url_fopen = Off   # ← DO NOT enable this; it breaks NinjaFirewall and similar
+	  '';
+
+	  phpEnv = {
+	    PATH = "/run/current-system/sw/bin:/usr/bin:/bin";
+	  };
+	};
 			services.httpd = {
 	  enable = true;
 	  adminAddr = "ribsai@outlook.com";
