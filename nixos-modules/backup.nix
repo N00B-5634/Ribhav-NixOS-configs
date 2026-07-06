@@ -4,7 +4,11 @@
     script = ''
       set -e
       mkdir -p /var/backups
-      ${pkgs.postgresql}/bin/pg_dumpall > /var/backups/postgres-all.sql
+
+      # postgres peer auth requires connecting as the postgres OS user, not root
+      ${pkgs.util-linux}/bin/runuser -u postgres -- \
+        ${pkgs.postgresql}/bin/pg_dumpall > /var/backups/postgres-all.sql
+
       ${pkgs.mariadb}/bin/mysqldump --all-databases > /var/backups/mysql-all.sql
 
       export RESTIC_REPOSITORY=/mnt/backup/restic-repo
@@ -13,14 +17,16 @@
       ${pkgs.restic}/bin/restic backup \
         /var/backups \
         /srv/http \
-        /etc/keycloak-db-pass \
-        /var/lib/cloudflare-tunnels
+        /var/lib/cloudflare-tunnels \
+        /etc/nixos \
+        /root/.config/sops/age \
+        /var/lib/tor
 
       ${pkgs.restic}/bin/restic forget --keep-daily 7 --keep-weekly 4 --prune
     '';
     serviceConfig = {
       Type = "oneshot";
-      User = "root";  # needs to read /etc secrets and dump DBs
+      User = "root";
     };
   };
 
@@ -28,7 +34,7 @@
     wantedBy = [ "timers.target" ];
     timerConfig = {
       OnCalendar = "daily";
-      Persistent = true;  # runs on next boot if the machine was off at the scheduled time
+      Persistent = true;
     };
   };
 }

@@ -11,6 +11,7 @@
     ./nixos-modules/users.nix
     ./nixos-modules/backup.nix
     ./nixos-modules/gatus.nix
+    ./nixos-modules/secrets.nix
   ];
 
   system.stateVersion = "25.05";

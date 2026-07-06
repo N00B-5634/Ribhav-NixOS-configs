@@ -11,7 +11,6 @@
     "d /var/tomcat/temp 0755 tomcat tomcat -"
     "d /var/tomcat/webapps 0755 tomcat tomcat -"
     "d /var/tomcat/conf 0755 tomcat tomcat -"
-    "f /var/lib/keycloak/db-password 0600 keycloak keycloak - dummy-password"
     "d /srv/http 0755 root root - -"
     "d /srv/http/errors 0755 root root - -"
   ];

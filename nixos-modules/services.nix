@@ -57,25 +57,24 @@ in
   services.cloudflared = {
     enable = true;
    };
-  systemd.services."cloudflared-tunnel-f3d06baf-166d-49a0-b5e3-ff8726be809a" = {
-  after = [ "network-online.target" ];
-  serviceConfig = {
-    EnvironmentFile = "/var/lib/cloudflare-tunnels/token_wordpress";
-    ExecStart =
-      "${pkgs.cloudflared}/bin/cloudflared tunnel --no-autoupdate run --token \${CLOUDFLARE_TUNNEL_TOKEN_WORDPRESS}";
-    Restart = "always";
-    RestartSec = "5";
-    DynamicUser = true;
-   };
- };
+	systemd.services."cloudflared-tunnel-f3d06baf-166d-49a0-b5e3-ff8726be809a" = {
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
+    serviceConfig = {
+      EnvironmentFile = config.sops.templates."cloudflare-tunnels.env".path;
+      ExecStart = "${pkgs.cloudflared}/bin/cloudflared tunnel --no-autoupdate run --token \${CLOUDFLARE_TUNNEL_TOKEN_WORDPRESS}";
+      Restart = "always";
+      RestartSec = "5";
+      DynamicUser = true;
+    };
+  };
+
   systemd.services."cloudflared-tunnel-9bcd38f4-74d9-4804-8c00-64e244ddd3ef" = {
     after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
     serviceConfig = {
-      EnvironmentFile = "/var/lib/cloudflare-tunnels/token";
-
-      ExecStart =
-        "${pkgs.cloudflared}/bin/cloudflared tunnel --no-autoupdate run --token \${CLOUDFLARE_TUNNEL_TOKEN}";
-
+      EnvironmentFile = config.sops.templates."cloudflare-tunnels.env".path;
+      ExecStart = "${pkgs.cloudflared}/bin/cloudflared tunnel --no-autoupdate run --token \${CLOUDFLARE_TUNNEL_TOKEN_DEFAULT}";
       Restart = "always";
       RestartSec = "5";
       DynamicUser = true;
@@ -84,51 +83,37 @@ in
 
   systemd.services."cloudflared-tunnel-" = {
     after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
     wantedBy = [ "multi-user.target" ];
-
     serviceConfig = {
-      EnvironmentFile =
-        "/var/lib/cloudflare-tunnels/token_http";
-
-      ExecStart =
-        "${pkgs.cloudflared}/bin/cloudflared tunnel --no-autoupdate run --token \${CLOUDFLARE_TUNNEL_TOKEN_HTTP}";
-
+      EnvironmentFile = config.sops.templates."cloudflare-tunnels.env".path;
+      ExecStart = "${pkgs.cloudflared}/bin/cloudflared tunnel --no-autoupdate run --token \${CLOUDFLARE_TUNNEL_TOKEN_HTTP}";
       Restart = "always";
       RestartSec = "5";
       DynamicUser = true;
     };
   };
-
 
   systemd.services."cloudflared-tunnel-0657ba26-d5ab-4733-a384-ad0c57b94f20" = {
     after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
     wantedBy = [ "multi-user.target" ];
-
     serviceConfig = {
-      EnvironmentFile =
-        "/var/lib/cloudflare-tunnels/token_music";
-
-      ExecStart =
-        "${pkgs.cloudflared}/bin/cloudflared tunnel --no-autoupdate run --token \${CLOUDFLARE_TUNNEL_TOKEN_MUSIC}";
-
+      EnvironmentFile = config.sops.templates."cloudflare-tunnels.env".path;
+      ExecStart = "${pkgs.cloudflared}/bin/cloudflared tunnel --no-autoupdate run --token \${CLOUDFLARE_TUNNEL_TOKEN_MUSIC}";
       Restart = "always";
       RestartSec = "5";
       DynamicUser = true;
     };
   };
 
-
   systemd.services."cloudflared-tunnel-27a037b8-e0c3-4ea6-84b0-87e18e435c6d" = {
     after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
     wantedBy = [ "multi-user.target" ];
-
     serviceConfig = {
-      EnvironmentFile =
-        "/var/lib/cloudflare-tunnels/token_sso";
-
-      ExecStart =
-        "${pkgs.cloudflared}/bin/cloudflared tunnel --no-autoupdate run --token \${CLOUDFLARE_TUNNEL_TOKEN_SSO}";
-
+      EnvironmentFile = config.sops.templates."cloudflare-tunnels.env".path;
+      ExecStart = "${pkgs.cloudflared}/bin/cloudflared tunnel --no-autoupdate run --token \${CLOUDFLARE_TUNNEL_TOKEN_SSO}";
       Restart = "always";
       RestartSec = "5";
       DynamicUser = true;
@@ -137,49 +122,37 @@ in
 
   systemd.services."cloudflared-tunnel-ca273db4-0a13-4eec-bcc8-709506b1896f" = {
     after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
     wantedBy = [ "multi-user.target" ];
-
     serviceConfig = {
-      EnvironmentFile =
-        "/var/lib/cloudflare-tunnels/token_management";
-
-      ExecStart =
-        "${pkgs.cloudflared}/bin/cloudflared tunnel --no-autoupdate run --token \${CLOUDFLARE_TUNNEL_TOKEN_MANAGEMENT}";
-
+      EnvironmentFile = config.sops.templates."cloudflare-tunnels.env".path;
+      ExecStart = "${pkgs.cloudflared}/bin/cloudflared tunnel --no-autoupdate run --token \${CLOUDFLARE_TUNNEL_TOKEN_MANAGEMENT}";
       Restart = "always";
       RestartSec = "5";
       DynamicUser = true;
     };
   };
-
 
   systemd.services."cloudflared-tunnel-9e8a59ce-9ab0-47cf-b9c7-dcf461642bfd" = {
     after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
     wantedBy = [ "multi-user.target" ];
-
     serviceConfig = {
-      EnvironmentFile =
-        "/var/lib/cloudflare-tunnels/token_status";
-
-      ExecStart =
-        "${pkgs.cloudflared}/bin/cloudflared tunnel --no-autoupdate run --token \${CLOUDFLARE_TUNNEL_TOKEN_STATUS}";
-
+      EnvironmentFile = config.sops.templates."cloudflare-tunnels.env".path;
+      ExecStart = "${pkgs.cloudflared}/bin/cloudflared tunnel --no-autoupdate run --token \${CLOUDFLARE_TUNNEL_TOKEN_STATUS}";
       Restart = "always";
       RestartSec = "5";
       DynamicUser = true;
     };
   };
-    systemd.services."cloudflared-tunnel-7838f584-fcd5-443c-b4a3-cd514a5be261" = {
+
+  systemd.services."cloudflared-tunnel-7838f584-fcd5-443c-b4a3-cd514a5be261" = {
     after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
     wantedBy = [ "multi-user.target" ];
-
     serviceConfig = {
-      EnvironmentFile =
-        "/var/lib/cloudflare-tunnels/token_SSH";
-
-      ExecStart =
-        "${pkgs.cloudflared}/bin/cloudflared tunnel --no-autoupdate run --token \${CLOUDFLARE_TUNNEL_TOKEN_SSH}";
-
+      EnvironmentFile = config.sops.templates."cloudflare-tunnels.env".path;
+      ExecStart = "${pkgs.cloudflared}/bin/cloudflared tunnel --no-autoupdate run --token \${CLOUDFLARE_TUNNEL_TOKEN_SSH}";
       Restart = "always";
       RestartSec = "5";
       DynamicUser = true;
@@ -187,33 +160,27 @@ in
       RestrictAddressFamilies = [ "AF_INET" "AF_INET6" "AF_UNIX" ];
     };
   };
-    systemd.services."cloudflared-tunnel-b07a74dd-4929-4d31-a3e5-419208083858" = {
+
+  systemd.services."cloudflared-tunnel-b07a74dd-4929-4d31-a3e5-419208083858" = {
     after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
     wantedBy = [ "multi-user.target" ];
-
     serviceConfig = {
-      EnvironmentFile =
-        "/var/lib/cloudflare-tunnels/token_rdp";
-
-      ExecStart =
-        "${pkgs.cloudflared}/bin/cloudflared tunnel --no-autoupdate run --token \${CLOUDFLARE_TUNNEL_TOKEN_RDP}";
-
+      EnvironmentFile = config.sops.templates."cloudflare-tunnels.env".path;
+      ExecStart = "${pkgs.cloudflared}/bin/cloudflared tunnel --no-autoupdate run --token \${CLOUDFLARE_TUNNEL_TOKEN_RDP}";
       Restart = "always";
       RestartSec = "5";
       DynamicUser = true;
     };
   };
-   systemd.services."cloudflared-tunnel-5070dedc-f39a-4ace-b84b-ec9524e2d3e3" = {
+
+  systemd.services."cloudflared-tunnel-5070dedc-f39a-4ace-b84b-ec9524e2d3e3" = {
     after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
     wantedBy = [ "multi-user.target" ];
-
     serviceConfig = {
-      EnvironmentFile =
-        "/var/lib/cloudflare-tunnels/token_wiki";
-
-      ExecStart =
-        "${pkgs.cloudflared}/bin/cloudflared tunnel --no-autoupdate run --token \${CLOUDFLARE_TUNNEL_TOKEN_WIKI}";
-
+      EnvironmentFile = config.sops.templates."cloudflare-tunnels.env".path;
+      ExecStart = "${pkgs.cloudflared}/bin/cloudflared tunnel --no-autoupdate run --token \${CLOUDFLARE_TUNNEL_TOKEN_WIKI}";
       Restart = "always";
       RestartSec = "5";
       DynamicUser = true;
@@ -279,7 +246,7 @@ in
 	    database = {
 	      createLocally = false;
 	      type = "postgresql";
-	      passwordFile = "/etc/keycloak-db-pass";
+	      passwordFile = config.sops.secrets.keycloak_db_password.path;
 	    };
 
 	    settings = {
@@ -336,8 +303,7 @@ in
  services.mediawiki = {
     enable = true;
     name = "Purple Dragon FTC Wiki";
-
-    passwordFile = "/etc/mediawiki/admin-password";
+    passwordFile = config.sops.secrets.mediawiki_admin_password.path;
 
     database = {
       type = "mysql";
