@@ -1,7 +1,4 @@
 
----
-
-```markdown
 # Ribhav’s NixOS Configs
 
 > "Oh no. My libc, it's broken."
@@ -52,8 +49,6 @@ This setup focuses on:
     ├── services.nix         # Network apps, HTTPD, and routing
     └── users.nix            # Identity mappings
 
-```
-```
 ```
 ### ISO?
 
