@@ -9,7 +9,6 @@
     ./nixos-modules/php-env.nix
     ./nixos-modules/services.nix
     ./nixos-modules/users.nix
-    ./nixos-modules/backup.nix
     ./nixos-modules/gatus.nix
     ./nixos-modules/secrets.nix
   ];

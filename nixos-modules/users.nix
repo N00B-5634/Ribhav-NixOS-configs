@@ -58,8 +58,15 @@ in
     ];
   };
 
+  users.users.keycloak = {
+  isSystemUser = true;
+  group = "keycloak";
+  description = "Keycloak service user";
+ };
 
-  programs.zsh.enable = true;
+users.groups.keycloak = {};
+  
+programs.zsh.enable = true;
 
   services.postgresql.enable = true;
 

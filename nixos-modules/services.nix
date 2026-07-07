@@ -521,7 +521,7 @@ $wgRawHtmlExtensions = [];
 
 # Security: enforce HTTPS for session cookies and uploads if possible
 # (Your Apache already does this; this is extra MW-level)
-$wgForceHTTPS = true;
+$wgForceHTTPS = false;
 
 # Security: disable anonymous talking if you don't want it
 $wgDisableAnonTalk = true;

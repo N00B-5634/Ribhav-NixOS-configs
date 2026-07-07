@@ -23,10 +23,6 @@
       fsType = "vfat";
       options = [ "fmask=0022" "dmask=0022" ];
     };
-    fileSystems."/mnt/backup" = {
-  device = "/dev/disk/by-uuid/07d224c8-09ef-4fb3-9bba-0ec640900134";
-  fsType = "ext4";  # or whatever you formatted it as
- };
   swapDevices =
     [ { device = "/dev/disk/by-uuid/6c0b8767-271b-4c5f-841f-a07c2d28f910"; }
     ];
