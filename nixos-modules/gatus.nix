@@ -15,61 +15,176 @@
         title = "Purple Dragon STATUS";
         header = "Core Network Infrastructure";
         # Inject raw CSS properties directly onto the DOM hooks
-        custom-css = '' /* Global Background - Deep Purple */
-    #global { 
-      background-color: #2D142C !important; 
-      color: #FEE7F0 !important; /* Very light pink text */
-    }
-    
-    /* Dashboard Area - Lavender */
-    .dashboard-container { 
-      background-color: #E6E6FA !important; 
-      border-radius: 12px;
-      padding: 20px;
-    }
+        custom-css = '' /* ==================================================================
+   Purple Dragon Status
+   One consistent design language across both modes:
+   - Deep purple (#2D142C) is the shared anchor color everywhere
+   - Dark mode  = deep purple + black
+   - Light mode = deep purple + lavender
+   ================================================================== */
 
-    /* Endpoint Cards - Pink */
-    .endpoint, .endpoint-group { 
-      background-color: #FFB6C1 !important; 
-      border: 2px solid #C71585 !important; /* Medium Violet Red/Magenta border */
-      border-radius: 10px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      margin-bottom: 15px;
-    }
+/* ---------- LIGHT MODE (default) ---------- */
 
-    /* Endpoint Headers - Magenta */
-    .endpoint-header, .endpoint-group-header { 
-      background-color: #FF00FF !important; 
-      color: #FFFFFF !important; 
-      border-top-left-radius: 8px;
-      border-top-right-radius: 8px;
-    }
+#global {
+  background-color: #EDEBF7 !important; /* lavender canvas */
+  color: #2D142C !important;            /* deep purple text - high contrast on lavender */
+}
 
-    /* Endpoint Content Area - Lighter Pink */
-    .endpoint-content, .endpoint-group-content { 
-      background-color: #FFF0F5 !important; /* Lavender Blush */
-      color: #4B0082 !important; /* Indigo/Dark Purple text for readability */
-    }
+.dashboard-container {
+  background-color: #F7F5FC !important; /* barely-there lavender, one shade up from global */
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 8px 24px rgba(45, 20, 44, 0.08);
+}
 
-    /* Status Badges - Yellow & Purple */
-    .bg-success { 
-      background-color: #FFD700 !important; /* Yellow for UP status instead of green */
-      color: #2D142C !important; /* Dark purple text inside yellow badge */
-    }
-    .bg-danger {
-      background-color: #8A2BE2 !important; /* Blue-Violet for DOWN status instead of red */
-      color: #FFFFFF !important;
-    }
+.endpoint, .endpoint-group {
+  background-color: #FFFFFF !important;
+  border: 1px solid #D9CFE8 !important;
+  border-left: 4px solid #2D142C !important; /* anchor color as the accent stripe */
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(45, 20, 44, 0.08);
+  margin-bottom: 16px;
+  transition: box-shadow 0.2s ease;
+}
 
-    /* Announcements Container (if used) */
-    .announcement-container {
-      background-color: #DDA0DD !important; /* Plum */
-      border: 2px dashed #FFD700 !important; /* Yellow border */
-    }
-    .announcement-header {
-      background-color: #800080 !important; /* Purple */
-      color: #FFFFFF !important;
-    }
+.endpoint:hover, .endpoint-group:hover {
+  box-shadow: 0 4px 14px rgba(45, 20, 44, 0.16);
+}
+
+.endpoint-header, .endpoint-group-header {
+  background-color: #2D142C !important; /* deep purple header - same anchor as dark mode's bg */
+  color: #F7F5FC !important;
+  border-top-left-radius: 9px;
+  border-top-right-radius: 9px;
+  font-weight: 600;
+}
+
+.endpoint-content, .endpoint-group-content {
+  background-color: #FFFFFF !important;
+  color: #2D142C !important;
+}
+
+.bg-success {
+  background-color: #1FAA6D !important;
+  color: #FFFFFF !important;
+}
+
+.bg-danger {
+  background-color: #A31558 !important; /* deep purple-pink, not pure magenta */
+  color: #FFFFFF !important;
+}
+
+.announcement-container {
+  background-color: #F7F5FC !important;
+  border: 1px solid #2D142C !important;
+  border-radius: 10px;
+}
+
+.announcement-header {
+  background-color: #2D142C !important;
+  color: #F7F5FC !important;
+}
+
+
+/* ==================================================================
+   DARK MODE OVERRIDES
+   Covers both mechanisms Gatus may use to signal dark mode:
+   1) OS-level preference -> @media (prefers-color-scheme: dark)
+   2) manual toggle -> html.dark / body.dark class
+   If your instance's toggle isn't picked up by one, the other will catch it.
+   ================================================================== */
+
+@media (prefers-color-scheme: dark) {
+  #global {
+    background-color: #150A14 !important; /* near-black with a purple undertone, not pure #000 */
+    color: #EAD9E6 !important;            /* soft lavender-white text, easy on the eyes */
+  }
+
+  .dashboard-container {
+    background-color: #1E0F1D !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  }
+
+  .endpoint, .endpoint-group {
+    background-color: #241220 !important;
+    border: 1px solid #3D1F3B !important;
+    border-left: 4px solid #C9A0CF !important; /* pale purple accent pops against black */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+  }
+
+  .endpoint-header, .endpoint-group-header {
+    background-color: #150A14 !important; /* same black-purple as global bg, not deep purple - keeps dark mode reading as "dark" */
+    color: #EAD9E6 !important;
+  }
+
+  .endpoint-content, .endpoint-group-content {
+    background-color: #241220 !important;
+    color: #EAD9E6 !important;
+  }
+
+  .bg-success {
+    background-color: #2ECC81 !important; /* slightly brighter green so it still reads clearly on black */
+    color: #0D0D0D !important;
+  }
+
+  .bg-danger {
+    background-color: #E24E8C !important; /* brighter pink-magenta, needs more punch against black than it does on lavender */
+    color: #150A14 !important;
+  }
+
+  .announcement-container {
+    background-color: #1E0F1D !important;
+    border: 1px solid #C9A0CF !important;
+  }
+
+  .announcement-header {
+    background-color: #150A14 !important;
+    color: #EAD9E6 !important;
+  }
+}
+
+/* Manual toggle fallback - only applies if Gatus adds a .dark class to <html> or <body> */
+html.dark #global, body.dark #global {
+  background-color: #150A14 !important;
+  color: #EAD9E6 !important;
+}
+html.dark .dashboard-container, body.dark .dashboard-container {
+  background-color: #1E0F1D !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+html.dark .endpoint, body.dark .endpoint,
+html.dark .endpoint-group, body.dark .endpoint-group {
+  background-color: #241220 !important;
+  border: 1px solid #3D1F3B !important;
+  border-left: 4px solid #C9A0CF !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+html.dark .endpoint-header, body.dark .endpoint-header,
+html.dark .endpoint-group-header, body.dark .endpoint-group-header {
+  background-color: #150A14 !important;
+  color: #EAD9E6 !important;
+}
+html.dark .endpoint-content, body.dark .endpoint-content,
+html.dark .endpoint-group-content, body.dark .endpoint-group-content {
+  background-color: #241220 !important;
+  color: #EAD9E6 !important;
+}
+html.dark .bg-success, body.dark .bg-success {
+  background-color: #2ECC81 !important;
+  color: #0D0D0D !important;
+}
+html.dark .bg-danger, body.dark .bg-danger {
+  background-color: #E24E8C !important;
+  color: #150A14 !important;
+}
+html.dark .announcement-container, body.dark .announcement-container {
+  background-color: #1E0F1D !important;
+  border: 1px solid #C9A0CF !important;
+}
+html.dark .announcement-header, body.dark .announcement-header {
+  background-color: #150A14 !important;
+  color: #EAD9E6 !important;
+}
         '';
       };
 
