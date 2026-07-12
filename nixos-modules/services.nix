@@ -74,6 +74,7 @@ in
 	systemd.services."cloudflared-tunnel-f3d06baf-166d-49a0-b5e3-ff8726be809a" = {
     after = [ "network-online.target" ];
     wants = [ "network-online.target" ];
+    wantedBy = [ "multi-user.target" ];
     serviceConfig = {
       EnvironmentFile = config.sops.templates."cloudflare-tunnels.env".path;
       ExecStart = "${pkgs.cloudflared}/bin/cloudflared tunnel --no-autoupdate run --token \${CLOUDFLARE_TUNNEL_TOKEN_WORDPRESS}";
@@ -86,6 +87,7 @@ in
   systemd.services."cloudflared-tunnel-9bcd38f4-74d9-4804-8c00-64e244ddd3ef" = {
     after = [ "network-online.target" ];
     wants = [ "network-online.target" ];
+     wantedBy = [ "multi-user.target" ];
     serviceConfig = {
       EnvironmentFile = config.sops.templates."cloudflare-tunnels.env".path;
       ExecStart = "${pkgs.cloudflared}/bin/cloudflared tunnel --no-autoupdate run --token \${CLOUDFLARE_TUNNEL_TOKEN_DEFAULT}";
@@ -711,7 +713,7 @@ $wgHooks['ParserFirstCallInit'][] = function ( $parser ) {
 	    "a-main-ftc25671.com" = {
 	      hostName = "ftc25671.com";
 	      listen = [ { port = 80; } ];
-	      serverAliases = [ "ftc25671.com" "192.168.1.210/" ];
+	      serverAliases = [ "ftc25671.com" "192.168.1.210/" "ftc25dgxyd6xxmo7mzhjjhuvpvfvrjntfxxsoczawuyrwri4evm5tgad.onion" ];
 	      documentRoot = "/srv/http/wordpress";
 
 	      extraConfig = ''
@@ -816,78 +818,6 @@ $wgHooks['ParserFirstCallInit'][] = function ( $parser ) {
 	    ErrorDocument 404 /errors/404.html
 	  '';
 	};
-		     "tor-wordpress-onion" = {
-	    hostName = "ftc25dgxyd6xxmo7mzhjjhuvpvfvrjntfxxsoczawuyrwri4evm5tgad.onion";
-	    onlySSL = true;
-	    listen = [ 
-	      { ip = "127.0.0.1"; port = 443; ssl = true; }
-	      { ip = "::1"; port = 443; ssl = true; }
-	    ];
-	    sslServerCert = "/var/lib/httpd/onion-certs/onion.crt";
-	    sslServerKey = "/var/lib/httpd/onion-certs/onion.key";
-	    documentRoot = "/srv/http/wordpress";
-	    extraConfig = ''
-	      Protocols http/1.1
-	      KeepAlive Off
-	      
-	      <Directory "/srv/http/wordpress">
-		  AllowOverride All
-		  Require all granted
-		  DirectoryIndex index.php index.html
-	      </Directory>
-	      
-	      <FilesMatch "^(wp-config\.php|xmlrpc\.php|composer\.(json|lock)|readme\.html|license\.txt|\.htaccess|\.git)">
-		  Require all denied
-	      </FilesMatch>
-	      
-	      <Directory "/srv/http/wordpress/wp-content/uploads">
-		  <FilesMatch "\.php$">
-		      Require all denied
-		  </FilesMatch>
-	      </Directory>
-	      
-	      Alias /errors /srv/http/errors
-	      <Directory "/srv/http/errors">
-		  AllowOverride None
-		  Require all granted
-	      </Directory>
-	      ErrorDocument 403 /errors/403.html
-	      ErrorDocument 404 /errors/404.html
-	      
-	      SetEnv HTTPS on
-
-	      RemoteIPHeader X-Forwarded-For
-	      
-	      # ── Tor Context Identity Hardening ──
-	      <IfModule mod_headers.c>
-		  # Strip signatures that reveal Apache/PHP processing structures
-		  Header always unset X-Powered-By
-		  Header always unset Server
-		  Header always unset X-Pingback
-		  Header always unset Link
-		  
-		  # Match your clear-net security baseline
-		  Header always set X-Content-Type-Options "nosniff"
-		  Header always set X-Frame-Options "SAMEORIGIN"
-		  Header always set X-XSS-Protection "1; mode=block"
-		  Header always set Content-Security-Policy "frame-ancestors 'self' ftc25dgxyd6xxmo7mzhjjhuvpvfvrjntfxxsoczawuyrwri4evm5tgad.onion"
-		  
-		  # Protect cookies over the Tor layer
-		  Header always edit Set-Cookie "^(.*)$" "$1; HttpOnly; Secure; SameSite=Strict"
-	      </IfModule>
-	      
-	      <FilesMatch "\.php$">
-		  SetHandler "proxy:unix:/run/phpfpm/wordpress.sock|fcgi://localhost"
-	      </FilesMatch>
-	      
-	      SSLProxyEngine On
-	      SSLProxyVerify none
-	      SSLProxyCheckPeerName off
-	      ProxyPreserveHost On
-	      ProxyPass "/haiku-api/" "https://depot.haiku-os.org/"
-	      ProxyPassReverse "/haiku-api/" "https://depot.haiku-os.org/"
-	     '';
-	   };
 
 	    # 1. KEYCLOAK
 	    "sso.ftc25671.com" = {
