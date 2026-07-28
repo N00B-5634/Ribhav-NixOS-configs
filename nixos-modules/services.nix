@@ -18,34 +18,41 @@ in
       "${pkgs.xfce.xfce4-session}/bin/xfce4-session";
     openFirewall = true;
   };
-
   systemd.services.xrdp.environment = {
     XDG_CONFIG_DIRS = "/run/current-system/sw/etc/xdg";
     XDG_DATA_DIRS = "/run/current-system/sw/share";
     XORG_XRDP_DISPLAY_NUMBER = "10";
   };
-  
   services.openssh = {
-    enable = true;
+  enable = true;
 
-    settings = {
-      PermitRootLogin = "prohibit-password";
-      PasswordAuthentication = true;
-    };
-    
-    # FIX: Allows Cloudflare's web-rendered terminal to pass the SSH handshake safely
-    extraConfig = ''
-      HostKeyAlgorithms +ssh-rsa,ecdsa-sha2-nistp256
-      PubkeyAcceptedKeyTypes +ssh-rsa
-    '';
-  };
+  settings = {
+    PermitRootLogin = "prohibit-password";
+    PasswordAuthentication = true;
+
+    # Notice these are space/comma separated strings, not lists [...]
+    HostKeyAlgorithms = "rsa-sha2-256,rsa-sha2-512,ssh-rsa,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,ssh-ed25519";
+    PubkeyAcceptedKeyTypes = "rsa-sha2-256,rsa-sha2-512,ssh-rsa,ecdsa-sha2-nistp256,ssh-ed25519";
+   };
+ };
   networking.firewall.allowedTCPPorts = [
     22
     3389
+    7681
     80
-    3000
+    8000
+    8001
     4533
   ];
+services.ttyd = {
+  enable = true;
+  port = 7681;
+  interface = "0.0.0.0";
+  entrypoint = [ "/run/current-system/sw/bin/login" ]; 
+  writeable = true;# Appends the login command argument safely
+  checkOrigin = false;
+ };
+
   boot.kernel.sysctl = {
     "net.core.rmem_max" = 25000000;
     "net.core.rmem_default" = 25000000;

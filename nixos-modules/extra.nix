@@ -15,11 +15,14 @@
     "d /srv/http/errors 0755 root root - -"
   ];
 
-
-
+  services.usbmuxd = {
+  enable = true;
+  package = pkgs.usbmuxd2;
+ };
   programs.nix-ld.enable = true;
-
+  virtualisation.docker.enable = true;
   programs.nix-ld.libraries = with pkgs; [
+    stdenv.cc.cc.lib
     zlib
     glibc
   ];

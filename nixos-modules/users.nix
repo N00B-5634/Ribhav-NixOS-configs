@@ -14,7 +14,7 @@ in
 {
   users.users.ribhav = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "wwwrun" "mysql" "disk" ];
+    extraGroups = [ "wheel" "wwwrun" "mysql" "disk" "docker" ];
     shell = pkgs.zsh;
 
     packages = with pkgs; [
@@ -80,5 +80,6 @@ programs.zsh.enable = true;
     adwaita-icon-theme
     openssl
     navidrome
+    libimobiledevice
   ];
 }
