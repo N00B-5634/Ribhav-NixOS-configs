@@ -9,12 +9,16 @@
 
   services.printing.enable = true;
 
+  # --- LXQt Wayland Setup ---
+  # Enable LXQt desktop environment
+  services.desktopManager.lxqt.enable = true;
 
+  # Expose the native LXQt Wayland session to the login manager
+  services.displayManager.sessionPackages = [ pkgs.lxqt.lxqt-wayland-session ];
 
-  services.xserver = {
-    enable = true;
+  # Use Ly: a lightweight, console-based desktop manager that handles Wayland perfectly
+  services.displayManager.ly.enable = true;
 
-    desktopManager.xfce.enable = true;
-    displayManager.lightdm.enable = true;
-  };
+  # Explicitly disable the legacy X11 server completely
+  services.xserver.enable = false;
 }

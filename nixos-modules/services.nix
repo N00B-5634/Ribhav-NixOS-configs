@@ -12,17 +12,6 @@ let
 in
 
 {
-  services.xrdp = {
-    enable = true;
-    defaultWindowManager =
-      "${pkgs.xfce.xfce4-session}/bin/xfce4-session";
-    openFirewall = true;
-  };
-  systemd.services.xrdp.environment = {
-    XDG_CONFIG_DIRS = "/run/current-system/sw/etc/xdg";
-    XDG_DATA_DIRS = "/run/current-system/sw/share";
-    XORG_XRDP_DISPLAY_NUMBER = "10";
-  };
   services.openssh = {
   enable = true;
 
@@ -40,8 +29,6 @@ in
     3389
     7681
     80
-    8000
-    8001
     4533
   ];
 services.ttyd = {
