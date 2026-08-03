@@ -18,13 +18,14 @@ in
     shell = pkgs.zsh;
 
     packages = with pkgs; [
+      ente-auth
+      tor-browser
+      unzip
       ncdu
       eza
       tree
       bat
       fd
-      fzf
-      btop
       duf
       tldr
       fastfetch
@@ -33,22 +34,15 @@ in
       cmake
       pkg-config
       nodejs_24
-      pnpm
-      go
       curl
       wget
       rsnapshot
-      restic
       openssh
       iperf3
       neovim
       starship
       git
-      gh
-      vscode
       vlc
-      mpv
-      flameshot
       fastfetch
       zsh-syntax-highlighting
       zsh-autosuggestions
@@ -71,7 +65,6 @@ programs.zsh.enable = true;
   services.postgresql.enable = true;
 
   environment.systemPackages = with pkgs; [
-    openjdk
     filebrowser
     xinit
     xauth
@@ -80,6 +73,8 @@ programs.zsh.enable = true;
     adwaita-icon-theme
     openssl
     navidrome
-    libimobiledevice
+    xfce.xfce4-clipman-plugin
+    xclip
+    xsel
   ];
 }

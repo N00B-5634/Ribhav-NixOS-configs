@@ -910,149 +910,20 @@ $wgHooks['ParserFirstCallInit'][] = function ( $parser ) {
 			ProxyPassReverse / http://127.0.0.1:8080/
 			RequestHeader set X-Forwarded-Port "443"
 			RequestHeader set X-Forwarded-Proto "https"
-            <IfModule mod_mime.c>
-    # Force specific developer extensions to render as plain text
-    AddType text/plain .nix
-    AddType text/plain .log
-    AddType text/plain .md
-    AddType text/plain .sh
-    AddType text/plain .conf
-</IfModule>
-
-		      '';
-		    };
-	  };
-	};
-
-
-		environment.etc."/srv/http/errors/403.html".text = ''
-	  <!DOCTYPE html>
-	  <html lang="en">
-	  <head>
-	      <meta charset="UTF-8">
-	      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	      <title>403 Forbidden</title>
-	      <style>
-		  body {
-		      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-		      margin: 0;
-		      background: #fff;
-		      color: #111;
-		      display: flex;
-		      align-items: center;
-		      justify-content: center;
-		      height: 100vh;
-		  }
-		  .card {
-		      max-width: 720px;
-		      padding: 32px;
-		      border-radius: 12px;
-		      box-shadow: 0 6px 24px rgba(0,0,0,0.08);
-		      text-align: center;
-		  }
-		  h1 {
-		      margin: 0 0 8px;
-		      font-size: 28px;
-		  }
-		  p {
-		      margin: 0 0 16px;
-		      color: #444;
-		  }
-		  a {
-		      color: #1a73e8;
-		      text-decoration: none;
-		  }
-		  a:hover {
-		      text-decoration: underline;
-		  }
-	      </style>
-	  </head>
-	  <body>
-	      <div class="card">
-		  <h1>403 — Forbidden</h1>
-		  <p>You don't have permission to access this resource.</p>
-		  <a href="/">Return to homepage</a>
-	      </div>
-	  </body>
-	  </html>
-	'';
-
-	environment.etc."/srv/http/errors/404.html".text = ''
-	  <!DOCTYPE html>
-	  <html lang="en">
-	  <head>
-	      <meta charset="UTF-8">
-	      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	      <title>404 Not Found</title>
-	      <style>
-		  body {
-		      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-		      margin: 0;
-		      background: #fff;
-		      color: #111;
-		      display: flex;
-		      align-items: center;
-		      justify-content: center;
-		      height: 100vh;
-		  }
-		  .card {
-		      max-width: 720px;
-		      padding: 32px;
-		      border-radius: 12px;
-		      box-shadow: 0 6px 24px rgba(0,0,0,0.08);
-		      text-align: center;
-		  }
-		  h1 {
-		      margin: 0 0 8px;
-		      font-size: 28px;
-		  }
-		  p {
-		      margin: 0 0 16px;
-		      color: #444;
-		  }
-		  a {
-		      color: #1a73e8;
-		      text-decoration: none;
-		  }
-		  a:hover {
-		      text-decoration: underline;
-		  }
-	      </style>
-	  </head>
-	  <body>
-	      <div class="card">
-		  <h1>404 — Not Found</h1>
-		  <p>The requested resource was not found on this server.</p>
-		  <a href="/">Return to homepage</a>
-	      </div>
-	  </body>
-	  </html>
-	'';
-           
-  services.samba = {
-    enable = true;
-    openFirewall = true;
-
-    settings = {
-      global = {
-        "server min protocol" = "SMB2";
-        "vfs objects" = "fruit streams_xattr";
-        "security" = "user";
-        "workgroup" = "WORKGROUP";
-        "server string" = "smbnixos";
-        "netbios name" = "smbnixos";
-      };
-
-      "ftc25671" = {
-        "path" = "/home/ribhav/Music";
-        "browseable" = "yes";
-        "read only" = "no";
-        "guest ok" = "no";
-        "admin users" = "ribhav";
-        "create mask" = "0664";
-        "directory mask" = "1775";
-        "force directory mode" = "1775";
+                      '';
+                    };
+                     "ssh.ftc25671.com" = {
+                       hostName = "ssh.ftc25671.com";
+                       serverAliases = [ "ftctxsksebj7tmqi2jvrzqpcbzoy5ybzmz6s7skbv3qvlljrl6iidgyd.onion"];
+                       extraConfig = ''
+                        ProxyPreserveHost On
+                        ProxyPass / http://127.0.0.1:3000/
+                        ProxyPassReverse / http://127.0.0.1:3000/
+                        RequestHeader set X-Forwarded-Port "443"
+                        RequestHeader set X-Forwarded-Proto "https"
+                        Header set Onion-Location "http://ftctxsksebj7tmqi2jvrzqpcbzoy5ybzmz6s7skbv3qvlljrl6iidgyd.onion"
+           '';              
+        };
       };
     };
-  };
 }
