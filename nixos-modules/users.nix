@@ -63,18 +63,13 @@ users.groups.keycloak = {};
 programs.zsh.enable = true;
 
   services.postgresql.enable = true;
-
-  environment.systemPackages = with pkgs; [
+   environment.systemPackages = with pkgs; [
     filebrowser
-    xinit
-    xauth
     perl
-    xorg.xorgserver
     adwaita-icon-theme
     openssl
     navidrome
-    xfce.xfce4-clipman-plugin
-    xclip
-    xsel
+    wl-clipboard # Modern Wayland replacement for xclip
   ];
+
 }
