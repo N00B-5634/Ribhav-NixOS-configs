@@ -697,13 +697,28 @@ $wgHooks['ParserFirstCallInit'][] = function ( $parser ) {
 	    "rewrite"
 	    "remoteip"
 	    "proxy_fcgi"
+            "brotli"
+            "filter"
 	  ];
-		  extraConfig = ''
-	    ServerTokens ProductOnly
-	    ServerSignature Off
-            FileETag None
-	  '';
-	  virtualHosts = {
+	  extraConfig =  ''
+  ServerTokens ProductOnly
+  ServerSignature Off
+  FileETag None
+
+  AddOutputFilterByType BROTLI_COMPRESS \
+    text/html \
+    text/plain \
+    text/css \
+    text/javascript \
+    application/javascript \
+    application/json \
+    application/xml \
+    image/svg+xml \
+    application/wasm 
+   
+  BrotliCompressionQuality 5
+ '';
+            virtualHosts = {
 	    "a-main-ftc25671.com" = {
 	      hostName = "ftc25671.com";
 	      listen = [ { port = 80; } ];
@@ -899,18 +914,35 @@ $wgHooks['ParserFirstCallInit'][] = function ( $parser ) {
 			RequestHeader set X-Forwarded-Proto "https"
                       '';
                     };
-                     "ssh.ftc25671.com" = {
-                       hostName = "ssh.ftc25671.com";
-                       serverAliases = [ "ftctxsksebj7tmqi2jvrzqpcbzoy5ybzmz6s7skbv3qvlljrl6iidgyd.onion"];
-                       extraConfig = ''
-                        ProxyPreserveHost On
-                        ProxyPass / http://127.0.0.1:3000/
-                        ProxyPassReverse / http://127.0.0.1:3000/
-                        RequestHeader set X-Forwarded-Port "443"
-                        RequestHeader set X-Forwarded-Proto "https"
-                        Header set Onion-Location "http://ftctxsksebj7tmqi2jvrzqpcbzoy5ybzmz6s7skbv3qvlljrl6iidgyd.onion"
-           '';              
-        };
-      };
-    };
+                    "ssh.ftc25671.com" = {
+  hostName = "ssh.ftc25671.com";
+
+  serverAliases = [
+    "ftctxsksebj7tmqi2jvrzqpcbzoy5ybzmz6s7skbv3qvlljrl6iidgyd.onion"
+  ];
+
+  extraConfig = ''
+    ProxyPreserveHost On
+
+    ProxyPass / http://127.0.0.1:3000/
+    ProxyPassReverse / http://127.0.0.1:3000/
+
+    RequestHeader set X-Forwarded-Port "443"
+    RequestHeader set X-Forwarded-Proto "https"
+
+    Header set Onion-Location "http://ftctxsksebj7tmqi2jvrzqpcbzoy5ybzmz6s7skbv3qvlljrl6iidgyd.onion"
+
+    # Security headers
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+    # Cache Nuxt hashed assets
+    <Location "/_nuxt/">
+      Header always set Cache-Control "public, max-age=31536000, immutable"
+    </Location>
+     '';
+   };
+  };
+ };
 }

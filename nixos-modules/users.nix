@@ -27,11 +27,7 @@ in
       bat
       fd
       duf
-      tldr
       fastfetch
-      gcc
-      gnumake
-      cmake
       pkg-config
       nodejs_24
       curl
@@ -42,6 +38,7 @@ in
       neovim
       starship
       git
+      gh
       vlc
       fastfetch
       zsh-syntax-highlighting
