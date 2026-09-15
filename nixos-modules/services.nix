@@ -30,15 +30,8 @@ in
     7681
     80
     4533
+    3000
   ];
-services.ttyd = {
-  enable = true;
-  port = 7681;
-  interface = "0.0.0.0";
-  entrypoint = [ "/run/current-system/sw/bin/login" ]; 
-  writeable = true;# Appends the login command argument safely
-  checkOrigin = false;
- };
 
   boot.kernel.sysctl = {
     "net.core.rmem_max" = 25000000;
@@ -210,7 +203,7 @@ services.ttyd = {
       WorkingDirectory = "/srv/http/ftc25671";
 
       ExecStart =
-        "${pkgs.nodejs}/bin/npm run docs:dev -- --host";
+        "${pkgs.nodejs}/bin/npm run start";
 
       Restart = "always";
 
@@ -722,7 +715,7 @@ $wgHooks['ParserFirstCallInit'][] = function ( $parser ) {
 	    "a-main-ftc25671.com" = {
 	      hostName = "ftc25671.com";
 	      listen = [ { port = 80; } ];
-	      serverAliases = [ "ftc25671.com" "192.168.1.210/" "ftc25dgxyd6xxmo7mzhjjhuvpvfvrjntfxxsoczawuyrwri4evm5tgad.onion" ];
+	      serverAliases = [ "ftc25671.com" "www.ftc25671.com" "ftc25dgxyd6xxmo7mzhjjhuvpvfvrjntfxxsoczawuyrwri4evm5tgad.onion" ];
 	      documentRoot = "/srv/http/wordpress";
 
 	      extraConfig = ''
